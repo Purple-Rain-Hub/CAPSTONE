@@ -108,7 +108,7 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
 
-    var roles = new[] { "Admin", "User"};
+    var roles = new[] { "Admin", "User" };
 
     foreach (var role in roles)
     {
