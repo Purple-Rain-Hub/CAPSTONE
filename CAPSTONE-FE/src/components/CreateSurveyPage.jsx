@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { postNewSurvey } from "../redux/action";
+import { getSurvey, postNewSurvey } from "../redux/action";
 
 const CreateSurveyPage = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,11 @@ const CreateSurveyPage = () => {
     e.preventDefault();
     dispatch(postNewSurvey(newSurvey));
   };
+
+  useEffect(() => {
+    const existingSurvey = dispatch(getSurvey());
+    setNewSurvey(existingSurvey);
+  }, []);
 
   return (
     <Container>
@@ -79,8 +84,20 @@ const CreateSurveyPage = () => {
                 <p></p>
               )}
             </div>
-            {/* CREARE BOTTONE PER RIMUOVERE LA DOMANDA PERO 
-            CHE ESISTA SOLO A PARTIRE DA newSurvey.lenght > 1 */}
+            {newSurvey.length > 1 ? (
+              <Button
+                onClick={() => {
+                  const updatedSurvey = [...newSurvey];
+                  updatedSurvey.splice(x, 1);
+                  setNewSurvey(updatedSurvey);
+                }}
+                className="btn-danger"
+              >
+                Rimuovi domanda
+              </Button>
+            ) : (
+              <p></p>
+            )}
           </div>
         ))}
         <Button

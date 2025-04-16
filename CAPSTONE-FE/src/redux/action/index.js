@@ -12,7 +12,25 @@ export const postNewSurvey = (newSurvey) => {
                 console.log("post effettuata con successo");
             } else throw new Error("errore nel POST del survey")
         } catch (error) {
-            console.error("ERRORE POST" + error)
+            console.error("ERRORE POST SURVEY" + error)
+        }
+    }
+}
+
+export const getSurvey = () => {
+    return async () => {
+        try {
+            const response = await fetch(
+                //inserire fetch per backend
+            )
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                return data;
+            } else throw new Error("errore nella GET del survey")
+        } catch (error) {
+            console.error("ERRORE GET SURVEY" + error)
+            return null
         }
     }
 }
