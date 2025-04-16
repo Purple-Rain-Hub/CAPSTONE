@@ -19,6 +19,7 @@ namespace CAPSTONE_BE.Data
         public DbSet<SurveySession> SurveySessions { get; set; }
         public DbSet<SurveyAnswer> SurveyAnswers { get; set; }
         public DbSet<GameScore> GameScores { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

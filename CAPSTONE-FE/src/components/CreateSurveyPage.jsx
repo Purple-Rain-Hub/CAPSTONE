@@ -19,7 +19,9 @@ const CreateSurveyPage = () => {
 
   useEffect(() => {
     const existingSurvey = dispatch(getSurvey());
-    setNewSurvey(existingSurvey);
+    if (existingSurvey != null) {
+      setNewSurvey(existingSurvey);
+    }
   }, []);
 
   return (

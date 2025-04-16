@@ -1,5 +1,6 @@
 using CAPSTONE_BE.Data;
 using CAPSTONE_BE.Models;
+using CAPSTONE_BE.Services;
 using CAPSTONE_BE.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -67,6 +68,9 @@ builder.Services.AddAuthentication(
 builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<SignInManager<ApplicationUser>>();
 builder.Services.AddScoped<RoleManager<ApplicationRole>>();
+
+//serivizi per Survey
+builder.Services.AddScoped<SurveyService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
