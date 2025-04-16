@@ -1,8 +1,20 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import HomePage from "./components/HomePage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SurveyPage from "./components/SurveyPage";
+import CreateSurveyPage from "./components/CreateSurveyPage";
 
 function App() {
-  return <></>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/Survey" element={<SurveyPage />} />
+        <Route path="/CreateSurvey" element={<CreateSurveyPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

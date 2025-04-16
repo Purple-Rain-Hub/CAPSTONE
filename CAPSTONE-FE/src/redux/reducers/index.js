@@ -1,6 +1,7 @@
 const initialState = {
     //creo esempio di slice con nome generico
-    cart: {
+    survey: {
+        session: [],
         content: []
     }
 }
