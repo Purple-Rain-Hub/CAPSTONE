@@ -2,17 +2,24 @@ export const postNewSurvey = (newSurvey) => {
     return async () => {
         try {
             const response = await fetch(
-                //inserire fetch per backend
+                "https://localhost:7019/api/Survey",
                 {
                     method: "POST",
-                    body: newSurvey
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        surveyQuestions: newSurvey,
+                    }),
                 }
             )
             if (response.ok) {
-                console.log("post effettuata con successo");
-            } else throw new Error("errore nel POST del survey")
+                console.log("post effettuata con successo ");
+                return true
+            } else throw new Error("errore nel POST del survey ");
         } catch (error) {
-            console.error("ERRORE POST SURVEY" + error)
+            console.error("ERRORE POST SURVEY " + error)
+            return false
         }
     }
 }
@@ -21,15 +28,15 @@ export const getSurvey = () => {
     return async () => {
         try {
             const response = await fetch(
-                //inserire fetch per backend
+                "https://localhost:7019/api/Survey",
             )
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
                 return data;
-            } else throw new Error("errore nella GET del survey")
+            } else throw new Error("errore nella GET del survey ")
         } catch (error) {
-            console.error("ERRORE GET SURVEY" + error)
+            console.error("ERRORE GET SURVEY " + error)
             return null
         }
     }

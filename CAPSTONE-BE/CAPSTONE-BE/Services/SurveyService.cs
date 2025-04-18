@@ -57,7 +57,7 @@ namespace CAPSTONE_BE.Services
         {
             try
             {
-                var surveyResults = _context.SurveyAnswers
+                var surveyResults = _context.SurveyQuestions
                     .GroupBy(s => s.Question)
                     .Select(g => new GetSurveyRequestDto
                      {

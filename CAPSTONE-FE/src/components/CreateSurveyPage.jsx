@@ -11,22 +11,40 @@ const CreateSurveyPage = () => {
       answers: ["", ""],
     },
   ]);
+  const [isSaved, setIsSaved] = useState(null);
 
-  const handleNewSurvey = (e) => {
+  const handleNewSurvey = async (e) => {
     e.preventDefault();
-    dispatch(postNewSurvey(newSurvey));
+    const success = await dispatch(postNewSurvey(newSurvey));
+    if (success) {
+      setIsSaved(true);
+    } else setIsSaved(false);
+  };
+
+  const fetchSurvey = async () => {
+    const existingSurvey = await dispatch(getSurvey());
+    if (existingSurvey != null && existingSurvey.length > 0) {
+      setNewSurvey(existingSurvey);
+    }
   };
 
   useEffect(() => {
-    const existingSurvey = dispatch(getSurvey());
-    if (existingSurvey != null) {
-      setNewSurvey(existingSurvey);
-    }
+    fetchSurvey();
   }, []);
 
   return (
     <Container>
       <h1>Crea nuovo questionario</h1>
+      {isSaved === null ? (
+        <span className="d-none"></span>
+      ) : isSaved ? (
+        <span className="bg-primary text-white p-2">Questionario salvato</span>
+      ) : (
+        <span className="bg-danger p-2">
+          Errore nel salvataggio del questionario
+        </span>
+      )}
+
       <Form onSubmit={handleNewSurvey}>
         {newSurvey.map((q, x) => (
           <div key={x} className="border border-1 border-dark-subtle p-3 mt-2">
@@ -83,7 +101,7 @@ const CreateSurveyPage = () => {
                   Rimuovi risposta
                 </Button>
               ) : (
-                <p></p>
+                <p className="d-none"></p>
               )}
             </div>
             {newSurvey.length > 1 ? (
@@ -98,7 +116,7 @@ const CreateSurveyPage = () => {
                 Rimuovi domanda
               </Button>
             ) : (
-              <p></p>
+              <p className="d-none"></p>
             )}
           </div>
         ))}
