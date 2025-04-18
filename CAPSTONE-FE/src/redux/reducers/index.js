@@ -1,8 +1,12 @@
 const initialState = {
     //creo esempio di slice con nome generico
     survey: {
-        session: [],
-        content: []
+        content: [{
+            question: "",
+            answer: "",
+            points: 0,
+            gamesId: [""]
+        }]
     }
 }
 

@@ -9,6 +9,7 @@ const CreateSurveyPage = () => {
     {
       question: "",
       answers: ["", ""],
+      points: 1,
     },
   ]);
   const [isSaved, setIsSaved] = useState(null);
@@ -31,6 +32,13 @@ const CreateSurveyPage = () => {
   useEffect(() => {
     fetchSurvey();
   }, []);
+
+  useEffect(() => {
+    if (isSaved !== null) {
+      const id = setTimeout(() => setIsSaved(null), 3000);
+      return () => clearTimeout(id);
+    }
+  }, [isSaved]);
 
   return (
     <Container>
@@ -81,6 +89,7 @@ const CreateSurveyPage = () => {
                 />
               ))}
               <Button
+                type="button"
                 onClick={() => {
                   const updatedSurvey = [...newSurvey];
                   updatedSurvey[x].answers.push("");
@@ -91,6 +100,7 @@ const CreateSurveyPage = () => {
               </Button>
               {newSurvey[x].answers.length > 2 ? (
                 <Button
+                  type="button"
                   onClick={() => {
                     const updatedSurvey = [...newSurvey];
                     updatedSurvey[x].answers.pop();
@@ -104,8 +114,22 @@ const CreateSurveyPage = () => {
                 <p className="d-none"></p>
               )}
             </div>
+            <div>
+              <Form.Label className="mt-2 fw-lighter">Punti</Form.Label>
+              <Form.Control
+                type="number"
+                required
+                value={q.points}
+                onChange={(e) => {
+                  const updatedSurvey = [...newSurvey];
+                  updatedSurvey[x].points = e.target.value;
+                  setNewSurvey(updatedSurvey);
+                }}
+              />
+            </div>
             {newSurvey.length > 1 ? (
               <Button
+                type="button"
                 onClick={() => {
                   const updatedSurvey = [...newSurvey];
                   updatedSurvey.splice(x, 1);
@@ -121,12 +145,14 @@ const CreateSurveyPage = () => {
           </div>
         ))}
         <Button
+          type="button"
           className="mt-2 d-block"
           onClick={() => {
             const updatedSurvey = [...newSurvey];
             updatedSurvey.push({
               question: "",
               answers: ["", ""],
+              points: 1,
             });
             setNewSurvey(updatedSurvey);
           }}

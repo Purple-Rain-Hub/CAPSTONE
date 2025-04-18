@@ -39,7 +39,8 @@ namespace CAPSTONE_BE.Services
                         var survey = new SurveyQuestion()
                         {
                             Question = question.Question,
-                            Answer = answer
+                            Answer = answer,
+                            Points = question.Points,
                         };
 
                         _context.SurveyQuestions.Add(survey);
@@ -62,7 +63,8 @@ namespace CAPSTONE_BE.Services
                     .Select(g => new GetSurveyRequestDto
                      {
                          Question = g.Key,
-                         Answers = g.Select(x => x.Answer).ToList()
+                         Answers = g.Select(x => x.Answer).ToList(),
+                         Points = g.FirstOrDefault().Points
                      })
                     .ToList();
 

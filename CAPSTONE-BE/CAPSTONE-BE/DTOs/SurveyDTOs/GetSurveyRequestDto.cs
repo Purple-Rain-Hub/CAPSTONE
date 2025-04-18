@@ -6,5 +6,6 @@ namespace CAPSTONE_BE.DTOs.SurveyDTOs
     {
         public string? Question { get; set; }
         public  List<string>? Answers { get; set; }
+        public int? Points { get; set; }
     }
 }
