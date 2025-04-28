@@ -7,16 +7,10 @@ import { useNavigate } from "react-router-dom";
 const SurveyPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [survey, setSurvey] = useState([
-    {
-      question: "",
-      answers: ["", ""],
-      points: 1,
-    },
-  ]);
+  const [survey, setSurvey] = useState([]);
   const [fetchError, setFetchError] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [selectedAnswerId, setSelectedAnswerId] = useState(null);
 
   const handleStart = () => {
     setCurrentIndex(0);
@@ -25,17 +19,21 @@ const SurveyPage = () => {
   const handleNext = () => {
     const currentQuestion = survey[currentIndex];
 
+    const chosenAnswer = currentQuestion.answers.find(
+      (a) => a.answerId === selectedAnswerId
+    );
+
     dispatch({
       type: "SAVE_SURVEY_CONTENT",
       payload: {
         question: currentQuestion.question,
-        answer: selectedAnswer,
+        answer: chosenAnswer.answer,
+        answerId: chosenAnswer.answerId,
         points: currentQuestion.points,
-        gamesId: [],
       },
     });
 
-    setSelectedAnswer("");
+    setSelectedAnswerId(null);
 
     if (currentIndex + 1 < survey.length) {
       setCurrentIndex(currentIndex + 1);
@@ -90,6 +88,7 @@ const SurveyPage = () => {
   }
 
   const currentQuestion = survey[currentIndex];
+  const isLast = currentIndex === survey.length - 1;
 
   return (
     <Container>
@@ -104,21 +103,21 @@ const SurveyPage = () => {
             key={i}
             type="radio"
             id={`answer-${i}`}
-            label={a}
+            label={a.answer}
             name="answers"
-            value={a}
-            checked={selectedAnswer === a}
-            onChange={(e) => setSelectedAnswer(e.target.value)}
+            value={a.answerId}
+            checked={selectedAnswerId === a.answerId}
+            onChange={() => setSelectedAnswerId(a.answerId)}
           />
         ))}
 
         <Button
           className="mt-3"
           onClick={handleNext}
-          disabled={selectedAnswer === ""}
+          disabled={selectedAnswerId == null}
           //ATTENZIONE: puo essere attivato tramite ispeziona
         >
-          Avanti
+          {isLast ? "Visualizza risultati" : "Avanti"}
         </Button>
       </Form>
     </Container>

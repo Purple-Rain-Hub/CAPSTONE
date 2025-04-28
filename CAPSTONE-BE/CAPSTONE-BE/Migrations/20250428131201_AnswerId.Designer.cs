@@ -4,6 +4,7 @@ using CAPSTONE_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CAPSTONE_BE.Migrations
 {
     [DbContext(typeof(CAPSTONEDbContext))]
-    partial class CAPSTONEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250428131201_AnswerId")]
+    partial class AnswerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,8 +195,8 @@ namespace CAPSTONE_BE.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<long>("AnswerId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Points")
                         .HasColumnType("int");

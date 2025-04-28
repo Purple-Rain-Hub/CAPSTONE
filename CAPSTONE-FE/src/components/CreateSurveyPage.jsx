@@ -8,7 +8,16 @@ const CreateSurveyPage = () => {
   const [newSurvey, setNewSurvey] = useState([
     {
       question: "",
-      answers: ["", ""],
+      answers: [
+        {
+          answer: "",
+          answerId: null,
+        },
+        {
+          answer: "",
+          answerId: null,
+        },
+      ],
       points: 1,
     },
   ]);
@@ -35,7 +44,7 @@ const CreateSurveyPage = () => {
 
   useEffect(() => {
     if (isSaved !== null) {
-      const id = setTimeout(() => setIsSaved(null), 3000);
+      const id = setTimeout(() => setIsSaved(null), 6000);
       return () => clearTimeout(id);
     }
   }, [isSaved]);
@@ -80,10 +89,10 @@ const CreateSurveyPage = () => {
                   type="text"
                   required
                   placeholder={`risposta n.${n + 1}`}
-                  value={a}
+                  value={a.answer}
                   onChange={(e) => {
                     const updatedSurvey = [...newSurvey];
-                    updatedSurvey[x].answers[n] = e.target.value;
+                    updatedSurvey[x].answers[n].answer = e.target.value;
                     setNewSurvey(updatedSurvey);
                   }}
                 />
@@ -92,7 +101,7 @@ const CreateSurveyPage = () => {
                 type="button"
                 onClick={() => {
                   const updatedSurvey = [...newSurvey];
-                  updatedSurvey[x].answers.push("");
+                  updatedSurvey[x].answers.push({ answer: "", answerId: null });
                   setNewSurvey(updatedSurvey);
                 }}
               >
@@ -122,7 +131,7 @@ const CreateSurveyPage = () => {
                 value={q.points}
                 onChange={(e) => {
                   const updatedSurvey = [...newSurvey];
-                  updatedSurvey[x].points = e.target.value;
+                  updatedSurvey[x].points = parseInt(e.target.value, 10) || 0;
                   setNewSurvey(updatedSurvey);
                 }}
               />
@@ -151,7 +160,16 @@ const CreateSurveyPage = () => {
             const updatedSurvey = [...newSurvey];
             updatedSurvey.push({
               question: "",
-              answers: ["", ""],
+              answers: [
+                {
+                  answer: "",
+                  answerId: null,
+                },
+                {
+                  answer: "",
+                  answerId: null,
+                },
+              ],
               points: 1,
             });
             setNewSurvey(updatedSurvey);

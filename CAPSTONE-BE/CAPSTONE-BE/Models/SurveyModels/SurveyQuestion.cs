@@ -11,6 +11,8 @@ namespace CAPSTONE_BE.Models.SurveyModels
         [MaxLength(500)]
         public required string Answer { get; set; }
         [Required]
+        public required long AnswerId { get; set; }
+        [Required]
         [Range(0, 100)]
         public required int Points { get; set; }
     }

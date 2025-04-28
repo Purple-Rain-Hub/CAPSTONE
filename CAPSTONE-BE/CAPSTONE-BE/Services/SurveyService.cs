@@ -9,9 +9,12 @@ namespace CAPSTONE_BE.Services
     public class SurveyService
     {
         private readonly CAPSTONEDbContext _context;
-        public SurveyService(CAPSTONEDbContext context)
+        private readonly IGDBService _IGDBService;
+
+        public SurveyService(CAPSTONEDbContext context, IGDBService IGDBService)
         {
             _context = context;
+            _IGDBService = IGDBService;
         }
 
         public async Task<bool> SaveAsync()
@@ -36,10 +39,18 @@ namespace CAPSTONE_BE.Services
                 {
                     foreach (var answer in question.Answers)
                     {
+                        //servizio per ottenere AnswerId
+                        long? Id = await _IGDBService.GetAnswerIdAsync(answer);
+                        if(Id == null)
+                        {
+                            return false;
+                        }
+
                         var survey = new SurveyQuestion()
                         {
                             Question = question.Question,
-                            Answer = answer,
+                            Answer = answer.Answer,
+                            AnswerId = Id.Value,
                             Points = question.Points,
                         };
 
@@ -58,15 +69,21 @@ namespace CAPSTONE_BE.Services
         {
             try
             {
-                var surveyResults = _context.SurveyQuestions
+                var surveyResults = await _context.SurveyQuestions
                     .GroupBy(s => s.Question)
                     .Select(g => new GetSurveyRequestDto
-                     {
-                         Question = g.Key,
-                         Answers = g.Select(x => x.Answer).ToList(),
-                         Points = g.FirstOrDefault().Points
-                     })
-                    .ToList();
+                    {
+                        Question = g.Key,
+                        Answers = g
+                            .Select(x => new AnswerDto
+                                {
+                                 Answer = x.Answer,
+                                 AnswerId = x.AnswerId,
+                                })
+                            .ToList(),
+                        Points = g.First().Points
+                    })
+                    .ToListAsync();
 
                 return surveyResults;
             }

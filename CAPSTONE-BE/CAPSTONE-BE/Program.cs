@@ -2,6 +2,7 @@ using CAPSTONE_BE.Data;
 using CAPSTONE_BE.Models;
 using CAPSTONE_BE.Services;
 using CAPSTONE_BE.Settings;
+using IGDB;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -68,6 +69,17 @@ builder.Services.AddAuthentication(
 builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<SignInManager<ApplicationUser>>();
 builder.Services.AddScoped<RoleManager<ApplicationRole>>();
+
+//SERVIZIO WRAPPER IGDB
+builder.Services.AddSingleton<IGDBClient>(sp =>
+  new IGDBClient(
+    builder.Configuration["IGDB:ClientId"],
+    builder.Configuration["IGDB:ClientSecret"]
+  )
+);
+
+//servizio IGDB
+builder.Services.AddScoped<IGDBService>();
 
 //serivizi per Survey
 builder.Services.AddScoped<SurveyService>();
