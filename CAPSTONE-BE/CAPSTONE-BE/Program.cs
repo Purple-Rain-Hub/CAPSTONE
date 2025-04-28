@@ -69,6 +69,7 @@ builder.Services.AddAuthentication(
 builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<SignInManager<ApplicationUser>>();
 builder.Services.AddScoped<RoleManager<ApplicationRole>>();
+builder.Services.AddScoped<AccountService>();
 
 //SERVIZIO WRAPPER IGDB
 builder.Services.AddSingleton<IGDBClient>(sp =>

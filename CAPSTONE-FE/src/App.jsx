@@ -12,6 +12,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/Survey" element={<SurveyPage />} />
         <Route path="/CreateSurvey" element={<CreateSurveyPage />} />
+        {/* <Route path="/SurveyResults" element={<ResultsPage />} /> */}
       </Routes>
     </BrowserRouter>
   );
