@@ -67,12 +67,12 @@ namespace CAPSTONE_BE.Services
 
                 return games.Select(g => new GameDetailDto
                 {
-                    Id = g.Id.Value,
+                    Id = g.Id!.Value,
                     Name = g.Name,
                     Cover = g.Cover?.Value.Url,
                     Summary = g.Summary,
-                    ReleaseDate = DateTimeOffset.FromUnixTimeSeconds((long?)g.FirstReleaseDate ?? 0)
-                });
+                    ReleaseDate = g.FirstReleaseDate!.Value
+                }).ToList();
             }
             catch
             {

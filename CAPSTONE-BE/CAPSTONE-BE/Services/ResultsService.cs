@@ -103,7 +103,7 @@ namespace CAPSTONE_BE.Services
 
         }
 
-        public async Task<List<GameDetailDto>> GetGamesDetailsAsync(Guid? sessionId)
+        public async Task<List<GameDetailDto>> GetGamesDetailsAsync(Guid sessionId)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace CAPSTONE_BE.Services
                 }
 
                 //prendo i dettagli dei GameId
-                var gamesDetails = await _IGDBService.GetGamesDetailsIGDB();
+                var gamesDetails = await _IGDBService.GetGamesDetailsIGDB(topGamesId);
 
                 return gamesDetails;
             }
