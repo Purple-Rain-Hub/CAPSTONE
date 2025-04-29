@@ -8,8 +8,8 @@ namespace CAPSTONE_BE.Models.SurveyModels
         [Key]
         public required Guid Id { get; set; }
         [Required]
-        public required string UserId { get; set; }
-        [ForeignKey("UserId")]
+        public required string UserEmail { get; set; }
+        [ForeignKey("UserEmail")]
         public ApplicationUser User { get; set; }
         [Required]
         public required DateTime SurveyDate { get; set; }

@@ -29,32 +29,6 @@ namespace CAPSTONE_BE.Services
             _roleManager = roleManager;
         }
 
-        //public async Task<List<RolesDto>> GetRolesAsync()
-        //{
-        //    try
-        //    {
-        //        var roles = await _roleManager.Roles.ToListAsync();
-
-        //        var rolesRequest = new List<RolesDto>();
-
-        //        foreach (var role in roles)
-        //        {
-        //            var request = new RolesDto()
-        //            {
-        //                RoleName = role.Name,
-        //            };
-
-        //            rolesRequest.Add(request);
-        //        }
-
-        //        return rolesRequest;
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-        //}
-
         public async Task<bool> RegisterAsync(RegisterRequestDto registerRequest)
         {
             try
@@ -127,36 +101,5 @@ namespace CAPSTONE_BE.Services
                 return (false, "An error occurred while processing the request");
             }
         }
-
-        //public async Task<List<UsersDto>> GetUsersAsync()
-        //{
-        //    try
-        //    {
-        //        var users = await _userManager.Users.Include(u => u.ApplicationUserRoles).ThenInclude(a => a.Role).ToListAsync();
-
-        //        var usersRequest = new List<UsersDto>();
-
-        //        foreach (var user in users)
-        //        {
-        //            var request = new UsersDto()
-        //            {
-        //                Id = user.Id,
-        //                FirstName = user.FirstName,
-        //                LastName = user.LastName,
-        //                Email = user.Email!,
-        //                Role = user.ApplicationUserRoles.FirstOrDefault().Role.Name
-        //            };
-
-        //            usersRequest.Add(request);
-        //        }
-
-        //        return usersRequest;
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-
-        //}
     }
 }

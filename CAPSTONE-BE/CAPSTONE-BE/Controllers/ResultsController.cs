@@ -1,5 +1,6 @@
-﻿using CAPSTONE_BE.Services;
-using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using CAPSTONE_BE.DTOs.ResultsDTOs;
+using CAPSTONE_BE.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CAPSTONE_BE.Controllers
@@ -15,10 +16,25 @@ namespace CAPSTONE_BE.Controllers
             _resultsService = resultsService;
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> PostResults([FromBody] SubmitSurveyDto submitSurvey)
-        //{
-        //    var success = await _resultsService.SaveUserSurveyAsync(submitSurvey.Answers, User.GetUserId());
-        //}
+        [HttpPost]
+        public async Task<IActionResult> HandleSurvey([FromBody] List<SubmitQuestionDto> submitSurvey)
+        {
+            try
+            {
+                var sessionId = await _resultsService.SaveUserSurveyAsync(submitSurvey, User.FindFirstValue(ClaimTypes.Email));
+                if (sessionId == null)
+                {
+                    return null;
+                }
+
+                var gamesDetails = await _resultsService.GetGamesDetailsAsync(sessionId.Value);
+
+                return Ok(gamesDetails);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

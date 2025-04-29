@@ -17,39 +17,6 @@ namespace CAPSTONE_BE.Controllers
             _accountService = accountService;
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet]
-        //public async Task<IActionResult> GetRoles()
-        //{
-        //    try
-        //    {
-        //        var roles = await _accountService.GetRolesAsync();
-
-        //        if (roles == null)
-        //        {
-        //            return BadRequest(new
-        //            {
-        //                message = "Something went wrong"
-        //            });
-        //        }
-
-        //        var count = roles.Count();
-
-        //        var text = count == 1 ? $"{count} role found" : $"{count} roles found";
-
-        //        return Ok(new
-        //        GetRoleResponseDto()
-        //        {
-        //            Message = text,
-        //            Roles = roles
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
-
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequest)
         {
@@ -80,37 +47,5 @@ namespace CAPSTONE_BE.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet("Users")]
-        //public async Task<IActionResult> GetUsers()
-        //{
-        //    try
-        //    {
-        //        var users = await _accountService.GetUsersAsync();
-
-        //        if (users == null)
-        //        {
-        //            return BadRequest(new
-        //            {
-        //                message = "Something went wrong"
-        //            });
-        //        }
-
-        //        var count = users.Count();
-
-        //        var text = count == 1 ? $"{count} user found" : $"{count} users found";
-
-        //        return Ok(new
-        //        GetUserResponseDto()
-        //        {
-        //            Message = text,
-        //            Users = users
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
     }
 }

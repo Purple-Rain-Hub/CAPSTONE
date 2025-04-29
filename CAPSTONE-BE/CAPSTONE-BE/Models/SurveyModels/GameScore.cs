@@ -8,7 +8,7 @@ namespace CAPSTONE_BE.Models.SurveyModels
     public class GameScore
     {
         public required Guid SessionId { get; set; }
-        public required Guid GameId { get; set; }
+        public required long GameId { get; set; }
         [Required]
         public required int Points { get; set; }
         [ForeignKey("SessionId")]
