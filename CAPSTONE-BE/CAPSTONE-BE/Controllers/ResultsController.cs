@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using CAPSTONE_BE.DTOs.ResultsDTOs;
 using CAPSTONE_BE.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CAPSTONE_BE.Controllers
@@ -17,6 +18,7 @@ namespace CAPSTONE_BE.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> HandleSurvey([FromBody] List<SubmitQuestionDto> submitSurvey)
         {
             try

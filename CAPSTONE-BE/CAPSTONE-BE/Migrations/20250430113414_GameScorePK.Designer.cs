@@ -4,6 +4,7 @@ using CAPSTONE_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CAPSTONE_BE.Migrations
 {
     [DbContext(typeof(CAPSTONEDbContext))]
-    partial class CAPSTONEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250430113414_GameScorePK")]
+    partial class GameScorePK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,13 +217,13 @@ namespace CAPSTONE_BE.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserEmail");
 
                     b.ToTable("SurveySessions");
                 });
@@ -361,7 +364,7 @@ namespace CAPSTONE_BE.Migrations
                 {
                     b.HasOne("CAPSTONE_BE.Models.ApplicationUser", "User")
                         .WithMany("SurveySessions")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserEmail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

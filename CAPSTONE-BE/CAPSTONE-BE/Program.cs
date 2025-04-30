@@ -84,6 +84,7 @@ builder.Services.AddScoped<IGDBService>();
 
 //serivizi per Survey
 builder.Services.AddScoped<SurveyService>();
+builder.Services.AddScoped<ResultsService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

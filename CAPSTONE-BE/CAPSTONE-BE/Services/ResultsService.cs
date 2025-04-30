@@ -2,6 +2,7 @@
 using CAPSTONE_BE.DTOs.ResultsDTOs;
 using CAPSTONE_BE.Models.SurveyModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace CAPSTONE_BE.Services
 {
@@ -32,12 +33,17 @@ namespace CAPSTONE_BE.Services
         {
             try
             {
+                var user = await _context.Users.FirstOrDefaultAsync(u=> u.Email == userEmail);
+                if (user == null)
+                {
+                    return null;
+                }
                 //creo nuova sessione
                 var session = new SurveySession
                 {
-                    UserEmail = userEmail,
+                    UserId = user.Id,
                     SurveyDate = DateTime.Now,
-                    Id = new Guid()
+                    Id = Guid.NewGuid()
                 };
 
                 _context.SurveySessions.Add(session);

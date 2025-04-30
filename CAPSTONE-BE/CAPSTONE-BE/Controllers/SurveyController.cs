@@ -1,5 +1,6 @@
 ﻿using CAPSTONE_BE.DTOs.SurveyDTOs;
 using CAPSTONE_BE.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace CAPSTONE_BE.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateSurvey([FromBody] CreateSurveyDto createSurvey)
         {
             try
@@ -38,6 +40,7 @@ namespace CAPSTONE_BE.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> GetSurvey()
         {
             try
