@@ -1,8 +1,8 @@
 //creazione nuovo questionario
 export const postNewSurvey = (newSurvey) => {
-    return async (getState) => {
+    return async (dispatch, getState) => {
         try {
-            const token = getState().auth.token;
+            const token = getState().auth.token || localStorage.getItem("jwtToken");
 
             const response = await fetch(
                 "https://localhost:7019/api/Survey",
@@ -30,9 +30,9 @@ export const postNewSurvey = (newSurvey) => {
 
 //ottenimento questionario
 export const getSurvey = () => {
-    return async (getState) => {
+    return async (dispatch, getState) => {
         try {
-            const token = getState().auth.token;
+            const token = getState().auth.token || localStorage.getItem("jwtToken");
 
             const response = await fetch(
                 "https://localhost:7019/api/Survey", {
@@ -56,9 +56,9 @@ export const getSurvey = () => {
 
 //invio questionario compilato e ritorno dei risultati
 export const handleSurvey = (submitSurvey) => {
-    return async (getState) => {
+    return async (dispatch, getState) => {
         try {
-            const token = getState().auth.token;
+            const token = getState().auth.token || localStorage.getItem("jwtToken");
 
             const response = await fetch(
                 "https://localhost:7019/api/Results",
@@ -68,7 +68,7 @@ export const handleSurvey = (submitSurvey) => {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${token}`,
                     },
-                    body: JSON.stringify(submitSurvey),
+                    body: JSON.stringify(submitSurvey.content),
                 }
             )
             if (response.ok) {
@@ -120,7 +120,7 @@ export const login = (loginInfo) => {
                 body: JSON.stringify(loginInfo)
             })
             if (response.ok) {
-                const token = await response.json();
+                const { token } = await response.json();
                 localStorage.setItem("jwtToken", token);
                 dispatch({ type: "LOGIN_SUCCESS", payload: token });
                 return true;

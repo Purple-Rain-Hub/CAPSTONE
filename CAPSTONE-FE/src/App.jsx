@@ -1,10 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import HomePage from "./components/HomePage";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SurveyPage from "./components/SurveyPage";
 import CreateSurveyPage from "./components/CreateSurveyPage";
 import PrivateRoute from "./components/PrivateRoute";
+import RegisterPage from "./components/account/RegisterPage";
+import LoginPage from "./components/account/LoginPage";
+import ResultsPage from "./components/ResultsPage";
 
 function App() {
   return (
