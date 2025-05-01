@@ -115,7 +115,7 @@ namespace CAPSTONE_BE.Services
             {
                 //prendere top GameId da GameScores
                 var topGamesId = await _context.GameScores.Where(gs => gs.SessionId == sessionId).OrderByDescending(gs => gs.Points).Take(5).Select(gs => gs.GameId).ToListAsync();
-                if(topGamesId == null)
+                if(topGamesId.Count == 0)
                 {
                     return null;
                 }

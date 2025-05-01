@@ -26,7 +26,7 @@ namespace CAPSTONE_BE.Controllers
                 var sessionId = await _resultsService.SaveUserSurveyAsync(submitSurvey, User.FindFirstValue(ClaimTypes.Email));
                 if (sessionId == null)
                 {
-                    return null;
+                    return BadRequest("Impossibile salvare il questionario.");
                 }
 
                 var gamesDetails = await _resultsService.GetGamesDetailsAsync(sessionId.Value);
@@ -35,7 +35,7 @@ namespace CAPSTONE_BE.Controllers
             }
             catch
             {
-                return null;
+                return StatusCode(500, "Errore interno");
             }
         }
     }
