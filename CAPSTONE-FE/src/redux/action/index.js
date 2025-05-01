@@ -1,13 +1,16 @@
 //creazione nuovo questionario
 export const postNewSurvey = (newSurvey) => {
-    return async () => {
+    return async (getState) => {
         try {
+            const token = getState().auth.token;
+
             const response = await fetch(
                 "https://localhost:7019/api/Survey",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
                     },
                     body: JSON.stringify({
                         surveyQuestions: newSurvey,
@@ -27,10 +30,17 @@ export const postNewSurvey = (newSurvey) => {
 
 //ottenimento questionario
 export const getSurvey = () => {
-    return async () => {
+    return async (getState) => {
         try {
+            const token = getState().auth.token;
+
             const response = await fetch(
-                "https://localhost:7019/api/Survey",
+                "https://localhost:7019/api/Survey", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            }
             )
             if (response.ok) {
                 const data = await response.json();
@@ -46,14 +56,17 @@ export const getSurvey = () => {
 
 //invio questionario compilato e ritorno dei risultati
 export const handleSurvey = (submitSurvey) => {
-    return async () => {
+    return async (getState) => {
         try {
+            const token = getState().auth.token;
+
             const response = await fetch(
                 "https://localhost:7019/api/Results",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
                     },
                     body: JSON.stringify(submitSurvey),
                 }
