@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { getSurvey } from "../redux/action";
+import { getSurvey } from "../../redux/action/index";
 import { useNavigate } from "react-router-dom";
 
 const SurveyPage = () => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { handleSurvey } from "../redux/action";
+import { handleSurvey } from "../../redux/action";
 import { Button, Card, Container, Spinner } from "react-bootstrap";
 
 const ResultsPage = () => {

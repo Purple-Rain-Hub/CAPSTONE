@@ -83,6 +83,44 @@ export const handleSurvey = (submitSurvey) => {
     }
 }
 
+//fetch per carousel della home
+export const fetchNewReleases = () => {
+    return async () => {
+        try {
+            const response = await fetch(`https://localhost:7019/api/Games/new-releases`);
+            if (response.ok) {
+                const games = await response.json();
+                console.log(games);
+
+                return games
+            }
+            else throw new Error();
+        } catch (err) {
+            console.error("fetchNewReleases:", err);
+            return null
+        }
+    };
+};
+
+// Più giocati
+export const fetchMostPlayed = () => {
+    return async () => {
+        try {
+            const response = await fetch(`https://localhost:7019/api/Games/most-played`);
+
+            if (response.ok) {
+                const games = await response.json();
+                console.log(games);
+                return games
+            }
+            else throw new Error();
+        } catch (err) {
+            console.error("fetchMostPlayed:", err);
+            return null
+        }
+    };
+};
+
 
 //fetch per registrazione
 export const register = (registerInfo) => {
@@ -110,7 +148,7 @@ export const register = (registerInfo) => {
     }
 }
 
-//fetch per loigin
+//fetch per login
 export const login = (loginInfo) => {
     return async (dispatch) => {
         try {

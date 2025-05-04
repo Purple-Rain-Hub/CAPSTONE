@@ -79,5 +79,45 @@ namespace CAPSTONE_BE.Services
                 return null;
             }
         }
+
+        public async Task<List<GameDetailDto>> GetNewReleasesAsync()
+        {
+            var thirtyDaysAgo = DateTimeOffset.UtcNow.AddDays(-30).ToUnixTimeSeconds();
+            var query = $@"fields id,name,cover.url,summary,first_release_date; where first_release_date >= {thirtyDaysAgo}; sort first_release_date desc; limit 16;
+    ";
+
+            var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query);
+            if (games == null)
+            {
+                return null;
+            }
+            return games.Select(g => new GameDetailDto
+            {
+                Id = g.Id.Value,
+                Name = g.Name,
+                Cover = g.Cover?.Value?.Url,
+                Summary = g.Summary,
+                ReleaseDate = g.FirstReleaseDate ?? DateTimeOffset.MinValue
+            }).ToList();
+        }
+
+        public async Task<List<GameDetailDto>> GetMostPlayedAsync()
+        {
+            var query = $@"fields id,name,cover.url,summary,first_release_date; sort popularity desc; limit 16;";
+
+            var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query);
+            if (games == null)
+            {
+                return null;
+            }
+            return games.Select(g => new GameDetailDto
+            {
+                Id = g.Id.Value,
+                Name = g.Name,
+                Cover = g.Cover?.Value?.Url,
+                Summary = g.Summary,
+                ReleaseDate = g.FirstReleaseDate ?? DateTimeOffset.MinValue
+            }).ToList();
+        }
     }
 }

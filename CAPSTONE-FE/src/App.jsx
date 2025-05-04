@@ -1,17 +1,18 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
 import HomePage from "./components/HomePage";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import SurveyPage from "./components/SurveyPage";
-import CreateSurveyPage from "./components/CreateSurveyPage";
+import SurveyPage from "./components/survey/SurveyPage";
+import CreateSurveyPage from "./components/survey/CreateSurveyPage";
 import PrivateRoute from "./components/PrivateRoute";
 import RegisterPage from "./components/account/RegisterPage";
 import LoginPage from "./components/account/LoginPage";
-import ResultsPage from "./components/ResultsPage";
+import ResultsPage from "./components/survey/ResultsPage";
+import TopNavbar from "./components/TopNavbar";
 
 function App() {
   return (
     <BrowserRouter>
+      <TopNavbar />
       <Routes>
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />

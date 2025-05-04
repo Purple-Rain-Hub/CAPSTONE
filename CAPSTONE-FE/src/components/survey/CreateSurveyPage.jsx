@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { getSurvey, postNewSurvey } from "../redux/action";
+import { getSurvey, postNewSurvey } from "../../redux/action";
 
 const CreateSurveyPage = () => {
   const dispatch = useDispatch();

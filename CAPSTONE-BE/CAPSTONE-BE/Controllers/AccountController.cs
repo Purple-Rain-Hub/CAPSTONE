@@ -1,7 +1,6 @@
 ﻿using CAPSTONE_BE.DTOs.Account;
 using CAPSTONE_BE.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CAPSTONE_BE.Controllers

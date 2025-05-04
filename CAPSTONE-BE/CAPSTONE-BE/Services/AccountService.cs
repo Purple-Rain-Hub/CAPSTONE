@@ -5,7 +5,6 @@ using CAPSTONE_BE.DTOs.Account;
 using CAPSTONE_BE.Models;
 using CAPSTONE_BE.Settings;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
