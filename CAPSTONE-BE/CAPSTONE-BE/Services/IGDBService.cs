@@ -39,7 +39,7 @@ namespace CAPSTONE_BE.Services
 
         public async Task<List<long?>> GetGamesIdAsync(long answerId)
         {
-            var query = $@"fields id; where genres = ({answerId}); sort total_rating desc; limit 5;";
+            var query = $@"fields id; where genres = ({answerId}) & cover != null; sort total_rating desc; limit 5;";
 
             try
             {
@@ -83,7 +83,7 @@ namespace CAPSTONE_BE.Services
         public async Task<List<GameDetailDto>> GetNewReleasesAsync()
         {
             var thirtyDaysAgo = DateTimeOffset.UtcNow.AddDays(-30).ToUnixTimeSeconds();
-            var query = $@"fields id,name,cover.url,summary,first_release_date; where first_release_date >= {thirtyDaysAgo}; sort first_release_date desc; limit 16;
+            var query = $@"fields id,name,cover.url,summary,first_release_date; where first_release_date >= {thirtyDaysAgo} & cover != null; sort first_release_date desc; limit 16;
     ";
 
             var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query);
@@ -103,7 +103,7 @@ namespace CAPSTONE_BE.Services
 
         public async Task<List<GameDetailDto>> GetMostPlayedAsync()
         {
-            var query = $@"fields id,name,cover.url,summary,first_release_date; sort popularity desc; limit 16;";
+            var query = $@"fields id,name,cover.url,summary,first_release_date; where cover != null; sort popularity desc; limit 16;";
 
             var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query);
             if (games == null)
