@@ -136,7 +136,7 @@ export const register = (registerInfo) => {
                 return true;
             }
             else {
-                const message = await response.json();
+                const { message } = await response.json();
                 throw new Error(message);
 
             }
@@ -164,7 +164,7 @@ export const login = (loginInfo) => {
                 return true;
             }
             else {
-                const message = await response.json();
+                const { message } = await response.json();
                 throw new Error(message);
 
             }

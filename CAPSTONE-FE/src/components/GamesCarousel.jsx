@@ -9,7 +9,8 @@ const GamesCarousel = ({ title, games, itemsToShow }) => {
   return (
     <Container
       fluid
-      className="my-4 border border-4 py-4 bg-info border-danger"
+      className="my-4 border border-4 py-4 bg-info border-black"
+      id="carouselDiv"
     >
       <h3 className="mb-3">{title}</h3>
       <Carousel controls indicators={false}>

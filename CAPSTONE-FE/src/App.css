@@ -1,0 +1,31 @@
+#hero,
+#surveyContainer {
+  background: #b03dd3;
+  background: linear-gradient(
+    90deg,
+    rgba(176, 61, 211, 1) 40%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+#carouselDiv {
+  background: #55d818;
+  background: linear-gradient(
+    90deg,
+    rgba(85, 216, 24, 1) 40%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+/* #home {
+  background: #6c1b85;
+  background: linear-gradient(
+    90deg,
+    rgba(108, 27, 133, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+} */
+
+.mainContainer {
+  min-height: 85vh;
+}

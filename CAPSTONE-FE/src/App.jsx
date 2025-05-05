@@ -8,6 +8,8 @@ import RegisterPage from "./components/account/RegisterPage";
 import LoginPage from "./components/account/LoginPage";
 import ResultsPage from "./components/survey/ResultsPage";
 import TopNavbar from "./components/TopNavbar";
+import FooterComponent from "./components/FooterComponent";
+import "./App.css";
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
 
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
+      <FooterComponent />
     </BrowserRouter>
   );
 }

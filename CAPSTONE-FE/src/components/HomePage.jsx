@@ -1,4 +1,4 @@
-import { Button, Col, Container, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import GamesCarousel from "./GamesCarousel";
 import { useEffect, useState } from "react";
@@ -35,7 +35,7 @@ const HomePage = () => {
 
   if (loading) {
     return (
-      <Container className="text-center mt-5">
+      <Container fluid className="text-center mainContent">
         <Spinner animation="border" />
         <p>Caricamento dei contenuti..</p>
       </Container>
@@ -43,13 +43,21 @@ const HomePage = () => {
   }
 
   return (
-    <Container className="p-1 p-lg-4">
+    <Container
+      fluid
+      className="p-1 p-lg-4 d-flex flex-column mainContainer bg-black"
+      id="home"
+    >
       <Container
         id="hero"
-        className="d-flex justify-content-between bg-success p-0"
+        className="d-flex justify-content-between p-0 border border-4 border-black"
       >
-        <img src="https://placecats.com/500/400" alt="animeHero" />
-        <Container className="text-center my-auto">
+        <img
+          src="public\mascot\what2gameMascotHalf.png"
+          alt="mascotHero"
+          className="mx-auto"
+        />
+        <Container className="text-center my-auto w-50">
           <h2>Vieni e fai il nostro quiz</h2>
           <Button
             onClick={() => {
@@ -87,18 +95,20 @@ const HomePage = () => {
       <Container id="info">
         <Container
           fluid
-          className="my-4 border border-4 py-4 bg-warning border-danger row"
+          className="my-4 border border-4 py-4 bg-warning border-danger"
         >
-          <Col className="text-center">
-            <h5>"citazione bella ciao a tutti e tutte scrivere scrivere"</h5>
-          </Col>
-          <Col>
-            <h5>obbiettivo bello ciato a tutti</h5>
-            <h6>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat,
-              nostrum sequi?
-            </h6>
-          </Col>
+          <Row>
+            <Col className="text-center">
+              <h5>"citazione bella ciao a tutti e tutte scrivere scrivere"</h5>
+            </Col>
+            <Col>
+              <h5>obbiettivo bello ciato a tutti</h5>
+              <h6>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Fugiat, nostrum sequi?
+              </h6>
+            </Col>
+          </Row>
         </Container>
       </Container>
     </Container>
