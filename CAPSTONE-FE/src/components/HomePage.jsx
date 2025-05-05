@@ -11,14 +11,21 @@ const HomePage = () => {
   const [newReleases, setNewReleases] = useState([]);
   const [mostPlayed, setMostPlayed] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   //da aggiungere try catch
   const fetchCarousels = async () => {
     const nr = await dispatch(fetchNewReleases());
     const mp = await dispatch(fetchMostPlayed());
+    if (nr == null || mp == null) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
 
     setNewReleases(nr);
     setMostPlayed(mp);
+    setError(false);
     setLoading(false);
   };
 
@@ -59,6 +66,11 @@ const HomePage = () => {
           itemsToShow={5}
           games={newReleases}
         />
+        {error && (
+          <span className="bg-danger p-2 my-4">
+            Errore nel caricamento dei contenuti
+          </span>
+        )}
       </Container>
       <Container id="mostPlayed">
         <GamesCarousel
@@ -66,6 +78,11 @@ const HomePage = () => {
           itemsToShow={5}
           games={mostPlayed}
         />
+        {error && (
+          <span className="bg-danger p-2 my-4">
+            Errore nel caricamento dei contenuti
+          </span>
+        )}
       </Container>
       <Container id="info"></Container>
     </Container>
