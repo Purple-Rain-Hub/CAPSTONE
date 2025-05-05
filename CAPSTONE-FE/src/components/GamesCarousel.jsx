@@ -7,39 +7,40 @@ const GamesCarousel = ({ title, games, itemsToShow }) => {
   }
 
   return (
-    <Container fluid className="my-4">
+    <Container
+      fluid
+      className="my-4 border border-4 py-4 bg-info border-danger"
+    >
       <h3 className="mb-3">{title}</h3>
       <Carousel controls indicators={false}>
         {pages.map((page, idx) => (
           <Carousel.Item key={idx}>
             <div
-              className="d-flex flex-row flex-nowrap"
-              style={{ overflowX: "auto", padding: "0 1rem" }}
+              className="d-flex justify-content-start ps-3"
+              style={{ gap: "1rem" }}
             >
               {page.map((g) => (
-                <Card
+                <div
                   key={g.id}
-                  className="me-3"
-                  style={{ minWidth: "200px", maxWidth: "200px" }}
+                  style={{
+                    flex: `0 0 calc(100% / ${itemsToShow} - 1rem)`,
+                    height: 240,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    overflow: "hidden",
+                  }}
                 >
-                  {g.cover && (
-                    <Card.Img
-                      variant="top"
-                      src={g.cover}
-                      style={{ height: "120px", objectFit: "cover" }}
-                    />
-                  )}
-                  <Card.Body>
-                    <Card.Title className="fs-6 text-truncate">
-                      {g.name}
-                    </Card.Title>
-                    {g.summary && (
-                      <Card.Text className="text-truncate">
-                        {g.summary}
-                      </Card.Text>
-                    )}
-                  </Card.Body>
-                </Card>
+                  <img
+                    src={g.cover}
+                    alt={g.name}
+                    style={{
+                      maxHeight: "100%",
+                      maxWidth: "100%",
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
               ))}
             </div>
           </Carousel.Item>

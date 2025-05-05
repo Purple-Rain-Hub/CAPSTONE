@@ -1,4 +1,4 @@
-import { Button, Container, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import GamesCarousel from "./GamesCarousel";
 import { useEffect, useState } from "react";
@@ -43,12 +43,12 @@ const HomePage = () => {
   }
 
   return (
-    <Container className="p-4">
+    <Container className="p-1 p-lg-4">
       <Container
         id="hero"
         className="d-flex justify-content-between bg-success p-0"
       >
-        <img src="https://placecats.com/500/450" alt="animeHero" />
+        <img src="https://placecats.com/500/400" alt="animeHero" />
         <Container className="text-center my-auto">
           <h2>Vieni e fai il nostro quiz</h2>
           <Button
@@ -84,7 +84,23 @@ const HomePage = () => {
           </span>
         )}
       </Container>
-      <Container id="info"></Container>
+      <Container id="info">
+        <Container
+          fluid
+          className="my-4 border border-4 py-4 bg-warning border-danger row"
+        >
+          <Col className="text-center">
+            <h5>"citazione bella ciao a tutti e tutte scrivere scrivere"</h5>
+          </Col>
+          <Col>
+            <h5>obbiettivo bello ciato a tutti</h5>
+            <h6>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat,
+              nostrum sequi?
+            </h6>
+          </Col>
+        </Container>
+      </Container>
     </Container>
   );
 };

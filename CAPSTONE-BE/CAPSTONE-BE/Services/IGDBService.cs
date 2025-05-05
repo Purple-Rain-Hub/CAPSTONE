@@ -69,7 +69,7 @@ namespace CAPSTONE_BE.Services
                 {
                     Id = g.Id!.Value,
                     Name = g.Name,
-                    Cover = g.Cover?.Value.Url,
+                    Cover = g.Cover?.Value.Url.Replace("/t_thumb/", "/t_cover_big/"),
                     Summary = g.Summary,
                     ReleaseDate = g.FirstReleaseDate!.Value
                 }).ToList();
@@ -95,7 +95,7 @@ namespace CAPSTONE_BE.Services
             {
                 Id = g.Id.Value,
                 Name = g.Name,
-                Cover = g.Cover?.Value?.Url,
+                Cover = g.Cover?.Value?.Url.Replace("/t_thumb/", "/t_cover_big/"),
                 Summary = g.Summary,
                 ReleaseDate = g.FirstReleaseDate ?? DateTimeOffset.MinValue
             }).ToList();
@@ -114,7 +114,7 @@ namespace CAPSTONE_BE.Services
             {
                 Id = g.Id.Value,
                 Name = g.Name,
-                Cover = g.Cover?.Value?.Url,
+                Cover = g.Cover?.Value?.Url.Replace("/t_thumb/", "/t_cover_big/"),
                 Summary = g.Summary,
                 ReleaseDate = g.FirstReleaseDate ?? DateTimeOffset.MinValue
             }).ToList();
