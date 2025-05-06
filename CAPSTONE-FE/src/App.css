@@ -22,6 +22,7 @@ body {
 .mainContainer {
   padding-top: 2rem;
   padding-bottom: 2rem;
+  min-height: 85vh;
 }
 
 /* Link e bottoni generali */
@@ -75,11 +76,11 @@ h5 {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
-/* Contenitore card con aspect-ratio fisso 3:4 */
+/* Contenitore card con aspect-ratio */
 .carousel-card-no-title {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4; /* rapporto altezza/larghezza */
+  aspect-ratio: 3 / 4;
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(51, 255, 243, 0.7);
   border-radius: 0.75rem;
@@ -97,4 +98,87 @@ h5 {
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+/* Hero: default desktop col 4 + 8 */
+#hero .row {
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 767px) {
+  #hero .row {
+    flex-wrap: wrap;
+  }
+  #hero .col-xs-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center !important;
+  }
+  #hero .img-fluid {
+    max-height: 200px; /* riduci l'altezza su mobile */
+    margin-bottom: 1rem;
+  }
+}
+
+/* CSS SurveyPage */
+#surveyContainer {
+  background: rgba(16, 0, 29, 0.4);
+  min-height: 85vh;
+  padding: 2rem 1rem;
+}
+
+/* Card viola per il questionario */
+.card-survey {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--neon-cyan);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(51, 255, 243, 0.2), 0 0 30px rgba(255, 51, 214, 0.4);
+}
+
+/* Titolo domanda neon */
+.card-survey h2 {
+  text-shadow: 0 0 4px var(--neon-cyan), 0 0 8px var(--neon-pink);
+  font-size: 1.5rem;
+}
+
+/* Pulsanti risposta grandi e neon */
+.btn-answer {
+  font-family: "Permanent Marker", cursive;
+  border: 2px solid var(--neon-pink);
+  color: var(--neon-pink);
+  background: transparent;
+  transition: 0.2s;
+}
+.btn-answer:hover,
+.btn-answer.active {
+  background: var(--neon-pink);
+  color: #10001d;
+  box-shadow: 0 0 10px var(--neon-pink);
+}
+
+/* Pulsante Avanti */
+.btn-next {
+  background: var(--neon-cyan);
+  border: none;
+  color: #10001d;
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
+.btn-next:disabled {
+  opacity: 0.5;
+}
+
+/* Responsive: riduci padding e titoli su xs */
+@media (max-width: 576px) {
+  #surveyContainer {
+    padding: 1rem;
+  }
+  .card-survey {
+    padding: 1rem;
+  }
+  .card-survey h2 {
+    font-size: 1.25rem;
+  }
+  .btn-answer {
+    font-size: 0.9rem;
+  }
 }

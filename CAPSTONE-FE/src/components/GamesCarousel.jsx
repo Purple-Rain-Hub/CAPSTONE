@@ -12,28 +12,25 @@ const GamesCarousel = ({ games, itemsToShow }) => {
       <Carousel controls indicators={false} variant="dark">
         {pages.map((page, idx) => (
           <Carousel.Item key={idx}>
-            <div
-              className="d-flex justify-content-center px-3"
-              style={{ gap: `${gap}px` }}
-            >
+            <Row className="gx-3 px-3 justify-content-center">
               {page.map((g) => (
-                <div
+                <Col
                   key={g.id}
-                  className="carousel-card-no-title"
-                  style={{
-                    flex: `0 0 calc((100% - ${(page.length - 1) * gap}px) / ${
-                      page.length
-                    })`,
-                  }}
+                  xs={6}
+                  sm={4}
+                  md={Math.floor(12 / itemsToShow)}
+                  className="d-flex justify-content-center"
                 >
-                  <img
-                    src={g.cover}
-                    alt={g.name}
-                    className="carousel-img-no-title"
-                  />
-                </div>
+                  <div className="carousel-card-no-title">
+                    <img
+                      src={g.cover}
+                      alt={g.name}
+                      className="carousel-img-no-title"
+                    />
+                  </div>
+                </Col>
               ))}
-            </div>
+            </Row>
           </Carousel.Item>
         ))}
       </Carousel>

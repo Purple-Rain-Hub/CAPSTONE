@@ -1,5 +1,4 @@
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import GamesCarousel from "./GamesCarousel";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,42 +7,42 @@ import Hero from "./Hero";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const [newReleases, setNewReleases] = useState([]);
   const [mostPlayed, setMostPlayed] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
-  //da aggiungere try catch
-  const fetchCarousels = async () => {
-    const nr = await dispatch(fetchNewReleases());
-    const mp = await dispatch(fetchMostPlayed());
-    if (nr == null || mp == null) {
-      setError(true);
-      setLoading(false);
-      return;
+  const [loadingNew, setLoadingNew] = useState(true);
+  const [loadingMost, setLoadingMost] = useState(true);
+  const [errorNew, setErrorNew] = useState(false);
+  const [errorMost, setErrorMost] = useState(false);
+
+  const loadNew = async () => {
+    try {
+      const nr = await dispatch(fetchNewReleases());
+      if (!nr) throw new Error();
+      setNewReleases(nr);
+    } catch {
+      setErrorNew(true);
+    } finally {
+      setLoadingNew(false);
     }
-
-    setNewReleases(nr);
-    setMostPlayed(mp);
-    setError(false);
-    setLoading(false);
+  };
+  const loadMost = async () => {
+    try {
+      const mp = await dispatch(fetchMostPlayed());
+      if (!mp) throw new Error();
+      setMostPlayed(mp);
+    } catch {
+      setErrorMost(true);
+    } finally {
+      setLoadingMost(false);
+    }
   };
 
   useEffect(() => {
-    fetchCarousels();
-  }, []);
-
-  if (loading) {
-    return (
-      <Container
-        fluid
-        className="mainContainer d-flex vh-100 align-items-center justify-content-center"
-      >
-        <Spinner animation="grow" variant="light" />
-      </Container>
-    );
-  }
+    loadNew();
+    loadMost();
+  }, [dispatch]);
 
   return (
     <Container fluid className="mainContainer">
@@ -51,15 +50,34 @@ const HomePage = () => {
       <Hero />
 
       {/* CAROSELLO NUOVE USCITE */}
-      <Container className="mb-5">
+      <Container className="carousel-box mb-5">
         <h3 className="mb-3">Nuove Uscite</h3>
-        <GamesCarousel title="" games={newReleases} itemsToShow={5} />
+        {loadingNew ? (
+          <div className="text-center py-5">
+            <Spinner animation="border" />
+          </div>
+        ) : errorNew ? (
+          <div className="text-danger text-center py-3">
+            Errore nel caricamento delle nuove uscite
+          </div>
+        ) : (
+          <GamesCarousel games={newReleases} itemsToShow={5} />
+        )}
       </Container>
-
       {/* CAROSELLO PIÙ GIOCATI */}
-      <Container className="mb-5">
+      <Container className="carousel-box mb-5">
         <h3 className="mb-3">I Più Giocati</h3>
-        <GamesCarousel title="" games={mostPlayed} itemsToShow={5} />
+        {loadingMost ? (
+          <div className="text-center py-5">
+            <Spinner animation="border" />
+          </div>
+        ) : errorMost ? (
+          <div className="text-danger text-center py-3">
+            Errore nel caricamento dei più giocati
+          </div>
+        ) : (
+          <GamesCarousel games={mostPlayed} itemsToShow={5} />
+        )}
       </Container>
 
       {/* INFO BOX */}

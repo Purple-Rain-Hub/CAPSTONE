@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { getSurvey } from "../../redux/action/index";
+import { getSurvey } from "../../redux/action";
 import { useNavigate } from "react-router-dom";
 
 const SurveyPage = () => {
@@ -12,119 +12,115 @@ const SurveyPage = () => {
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [selectedAnswerId, setSelectedAnswerId] = useState(null);
 
-  const handleStart = () => {
-    setCurrentIndex(0);
-  };
+  // fetch questions
+  useEffect(() => {
+    (async () => {
+      const existing = await dispatch(getSurvey());
+      if (existing && existing.length) {
+        setSurvey(existing);
+        dispatch({ type: "RESET_SURVEY_CONTENT" });
+      } else {
+        setFetchError(true);
+      }
+    })();
+  }, [dispatch]);
+
+  const handleStart = () => setCurrentIndex(0);
 
   const handleNext = () => {
-    const currentQuestion = survey[currentIndex];
-
-    const chosenAnswer = currentQuestion.answers.find(
-      (a) => a.answerId === selectedAnswerId
-    );
-
+    const q = survey[currentIndex];
+    const chosen = q.answers.find((a) => a.answerId === selectedAnswerId);
     dispatch({
       type: "SAVE_SURVEY_CONTENT",
       payload: {
-        question: currentQuestion.question,
-        answer: chosenAnswer.answer,
-        answerId: chosenAnswer.answerId,
-        points: currentQuestion.points,
+        question: q.question,
+        answer: chosen.answer,
+        answerId: chosen.answerId,
+        points: q.points,
       },
     });
-
     setSelectedAnswerId(null);
-
-    if (currentIndex + 1 < survey.length) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      navigate("/SurveyResults");
-    }
+    currentIndex + 1 < survey.length
+      ? setCurrentIndex((i) => i + 1)
+      : navigate("/SurveyResults");
   };
 
-  const fetchSurvey = async () => {
-    const existingSurvey = await dispatch(getSurvey());
-    if (existingSurvey != null && existingSurvey.length > 0) {
-      setSurvey(existingSurvey);
-      dispatch({
-        type: "RESET_SURVEY_CONTENT",
-      });
-    } else setFetchError(true);
-  };
-
-  useEffect(() => {
-    fetchSurvey();
-  }, []);
-
+  // error / loading states
   if (fetchError) {
     return (
-      <Container fluid id="surveyContainer" className="mainContainer">
-        <h1>Benvenuto nel tuo Questionario</h1>
-        <span className="bg-danger text-white p-2">
-          Errore nel caricamente del questionario!
-        </span>
+      <Container fluid id="surveyContainer">
+        <h1 className="text-danger text-center">Errore caricamento quiz</h1>
       </Container>
     );
   }
-
   if (survey.length === 0) {
     return (
-      <Container fluid id="surveyContainer" className="mainContainer">
-        <h1>Benvenuto nel tuo Questionario</h1>
-        <span className="bg-warning p-2">Caricamento domande...</span>
+      <Container fluid id="surveyContainer">
+        <h1 className="text-center text-warning">Caricamento domande…</h1>
       </Container>
     );
   }
-
   if (currentIndex === -1) {
     return (
-      <Container fluid id="surveyContainer" className="mainContainer">
-        <Container className="d-flex justify-content-between p-0">
-          <img
-            src="\mascot\what2gameMascotFull.png"
-            alt="mascotHero"
-            className="mx-auto"
-          />
-          <Container className="text-center my-auto w-50">
-            <h2>
-              Ciao sono Emily! <br /> Sei pronto a scoprire il tuo prossimo
-              gioco preferito? ANDIAMO
-            </h2>
-            <Button className="mt-4" onClick={handleStart}>
-              Inizia!
+      <Container
+        fluid
+        id="surveyContainer"
+        className="d-flex align-items-center justify-content-center p-4"
+        style={{ minHeight: "85vh" }}
+      >
+        <Row className="align-items-center w-100 gx-4">
+          <Col xs={12} md={6} className="text-center mb-4 mb-md-0">
+            <img
+              src="/mascot/what2gameMascotFull.png"
+              alt="Emily Mascot"
+              className="img-fluid"
+              style={{ maxHeight: "80vh", width: "auto" }}
+            />
+          </Col>
+
+          <Col xs={12} md={6} className="text-center text-md-start">
+            <h1 className="mb-4">
+              Ciao, sono Emily!
+              <br />
+              Pronto a scoprire il tuo prossimo gioco preferito?
+            </h1>
+            <Button className="btn-survey px-5 py-3" onClick={handleStart}>
+              Inizia Quiz
             </Button>
-          </Container>
-        </Container>
+          </Col>
+        </Row>
       </Container>
     );
   }
 
-  const currentQuestion = survey[currentIndex];
+  const current = survey[currentIndex];
   const isLast = currentIndex === survey.length - 1;
 
   return (
     <Container
       fluid
       id="surveyContainer"
-      className="mainContainer d-flex justify-content-center align-items-center"
+      className="d-flex justify-content-center align-items-center"
     >
-      <Card style={{ maxWidth: 600, width: "100%" }} className="p-4">
-        <div className="mb-3">
-          <small className="text-muted">
-            Domanda {currentIndex + 1} / {survey.length}
-          </small>
-        </div>
-        <h2 className="mb-4">{currentQuestion.question}</h2>
+      <Card
+        className="card-survey p-4"
+        style={{ maxWidth: 600, width: "100%" }}
+      >
+        <small className="text-secondary mb-2 d-block">
+          Domanda {currentIndex + 1} / {survey.length}
+        </small>
 
+        <h2 className="mb-4 text-white">{current.question}</h2>
+
+        {/* risposte */}
         <div className="d-grid gap-3 mb-4">
-          {currentQuestion.answers.map((a, i) => (
+          {current.answers.map((a, i) => (
             <Button
               key={i}
-              variant={
-                selectedAnswerId === a.answerId ? "primary" : "outline-primary"
-              }
+              className={`btn-answer ${
+                selectedAnswerId === a.answerId ? "active" : ""
+              }`}
               size="lg"
-              className="text-start"
               onClick={() => setSelectedAnswerId(a.answerId)}
             >
               {a.answer}
@@ -132,9 +128,14 @@ const SurveyPage = () => {
           ))}
         </div>
 
+        {/* avanti */}
         <div className="d-flex justify-content-end">
-          <Button onClick={handleNext} disabled={selectedAnswerId == null}>
-            {isLast ? "Visualizza risultati" : "Avanti"}
+          <Button
+            className="btn-next"
+            onClick={handleNext}
+            disabled={selectedAnswerId == null}
+          >
+            {isLast ? "Risultati" : "Avanti"}
           </Button>
         </div>
       </Card>
