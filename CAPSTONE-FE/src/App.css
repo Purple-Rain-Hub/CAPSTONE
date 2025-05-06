@@ -182,3 +182,154 @@ h5 {
     font-size: 0.9rem;
   }
 }
+
+/* CSS ResultsPage */
+#resultsContainer {
+  background: rgba(16, 0, 29, 0.4);
+  min-height: 85vh;
+  padding: 2rem 1rem;
+}
+
+/* Titolo principale */
+#resultsContainer h2 {
+  text-shadow: 0 0 4px var(--neon-cyan), 0 0 8px var(--neon-pink);
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+/* Card primo classificato */
+.card-featured {
+  background: var(--card-bg);
+  border: 2px solid var(--neon-pink);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 51, 214, 0.4), 0 0 10px rgba(51, 255, 243, 0.2);
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
+}
+.card-featured img {
+  object-fit: cover;
+  width: 50%;
+  height: auto;
+}
+.card-featured .card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Card posizioni 2-5 */
+.card-top {
+  background: var(--card-bg);
+  border: 1px solid var(--neon-cyan);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(51, 255, 243, 0.3), 0 0 10px rgba(255, 51, 214, 0.2);
+  transition: transform 0.2s;
+}
+.card-top:hover {
+  transform: translateY(-5px);
+}
+.card-top img {
+  object-fit: cover;
+  height: 160px;
+  width: 100%;
+}
+.card-top .card-body {
+  padding: 0.75rem;
+}
+
+/* Griglia posizioni 2-5 */
+.top-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+@media (max-width: 575px) {
+  .top-grid,
+  .top-grid .card-top {
+    flex: 0 0 100%;
+  }
+}
+@media (min-width: 576px) and (max-width: 991px) {
+  .top-grid .card-top {
+    flex: 0 0 calc(50% - 0.5rem);
+  }
+}
+@media (min-width: 992px) {
+  .top-grid .card-top {
+    flex: 0 0 calc(25% - 0.75rem);
+  }
+}
+
+/* Bottoni */
+.btn-igdb {
+  background: var(--neon-pink);
+  border: none;
+  color: #10001d;
+  box-shadow: 0 0 10px var(--neon-pink);
+}
+
+/* CSS Navbar */
+.navbar-neon {
+  background: rgba(16, 0, 29, 0.8);
+  border-bottom: 1px solid var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(51, 255, 243, 0.3), 0 0 20px rgba(255, 51, 214, 0.3);
+}
+
+.navbar-neon .nav-link {
+  color: var(--text-color);
+  margin: 0 0.75rem;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.navbar-neon .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--neon-pink);
+  transition: width 0.2s, left 0.2s;
+}
+
+.navbar-neon .nav-link:hover {
+  color: var(--neon-pink);
+}
+
+.navbar-neon .nav-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.navbar-neon .brand-text {
+  font-family: "Permanent Marker", cursive;
+  color: var(--neon-pink);
+  font-size: 1.25rem;
+  text-shadow: 0 0 4px var(--neon-pink), 0 0 8px var(--neon-pink);
+}
+
+/* Toggle “hamburger” neon */
+.navbar-neon .navbar-toggler {
+  filter: brightness(0) invert(1);
+}
+
+.navbar-neon .navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Responsive small tweaks */
+@media (max-width: 575px) {
+  .navbar-neon .nav-link {
+    margin: 0 0.5rem;
+    font-size: 0.9rem;
+  }
+  .navbar-neon .brand-text {
+    font-size: 1rem;
+  }
+}

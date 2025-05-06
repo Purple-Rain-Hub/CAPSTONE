@@ -38,38 +38,65 @@ const ResultsPage = () => {
 
   if (loading) {
     return (
-      <Container className="text-center mt-5">
+      <Container
+        id="resultsContainer"
+        className="d-flex flex-column align-items-center justify-content-center"
+      >
         <Spinner animation="border" />
-        <p>Elaborazione dei risultati…</p>
+        <p className="mt-3">Elaborazione dei risultati…</p>
       </Container>
     );
   }
 
   if (!games || games.length === 0) {
     return (
-      <Container className="mt-5">
+      <Container id="resultsContainer" className="text-center">
         <h4>Nessun gioco consigliato trovato.</h4>
       </Container>
     );
   }
 
+  const top5 = games.slice(0, 5);
+  const [first, ...rest] = top5;
+
   return (
-    <Container className="mt-4">
-      <h2>Giochi consigliati per te</h2>
-      <div className="d-flex flex-wrap gap-3">
-        {games.map((g) => (
-          <Card key={g.id} style={{ width: "18rem" }}>
-            {g.cover && (
-              <Card.Img variant="top" src={g.cover} alt={`${g.name} cover`} />
-            )}
-            <Card.Body>
-              <Card.Title>{g.name}</Card.Title>
-              {g.summary && <Card.Text>{g.summary}</Card.Text>}
-              <Button
-                href={`https://www.igdb.com/games/${g.id}`}
-                target="_blank"
-              >
-                Vedi su IGDB
+    <Container id="resultsContainer">
+      <h2 className="text-center">I tuoi Top 5</h2>
+
+      <Card className="card-featured">
+        {first.cover && <Card.Img src={first.cover} alt={first.name} />}
+        <Card.Body className="card-body">
+          <Card.Title as="h3" className="text-white">
+            1. {first.name}
+          </Card.Title>
+          {first.summary && (
+            <Card.Text className="text-light">
+              {first.summary.length > 200
+                ? first.summary.slice(0, 200) + "…"
+                : first.summary}
+            </Card.Text>
+          )}
+          <Button
+            className="btn-igdb mt-3 align-self-start"
+            href={first.url}
+            target="_blank"
+          >
+            Vedi su IGDB
+          </Button>
+        </Card.Body>
+      </Card>
+
+      {/* Positions 2–5 */}
+      <div className="top-grid mt-4">
+        {rest.map((g, idx) => (
+          <Card key={g.id} className="card-top">
+            {g.cover && <Card.Img src={g.cover} alt={g.name} />}
+            <Card.Body className="card-body">
+              <Card.Title as="h5" className="text-white mb-2">
+                {idx + 2}. {g.name}
+              </Card.Title>
+              <Button className="btn-igdb" href={g.url} target="_blank">
+                Dettagli
               </Button>
             </Card.Body>
           </Card>

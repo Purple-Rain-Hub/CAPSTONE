@@ -12,5 +12,7 @@ namespace CAPSTONE_BE.DTOs.ResultsDTOs
         [Required]
         public required DateTimeOffset ReleaseDate { get; set; }
         public string? Cover {  get; set; }
+        [Required]
+        public required string Url { get; set; }
     }
 }

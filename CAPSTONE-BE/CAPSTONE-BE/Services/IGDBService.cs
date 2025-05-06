@@ -24,7 +24,7 @@ namespace CAPSTONE_BE.Services
                 var results = await _igdb.QueryAsync<Genre>(IGDBClient.Endpoints.Genres, query);
 
                 var answerId = results.FirstOrDefault();
-                if(answerId.Id == 0)
+                if (answerId.Id == 0)
                 {
                     return null;
                 }
@@ -55,7 +55,7 @@ namespace CAPSTONE_BE.Services
 
         public async Task<List<GameDetailDto>> GetGamesDetailsIGDB(List<long> topGamesId)
         {
-            var query = $@"fields id,name,cover.url,summary,first_release_date; where id = ({string.Join(",", topGamesId)});";
+            var query = $@"fields id,name,cover.url,summary,first_release_date,url; where id = ({string.Join(",", topGamesId)});";
 
             try
             {
@@ -71,7 +71,8 @@ namespace CAPSTONE_BE.Services
                     Name = g.Name,
                     Cover = g.Cover?.Value.Url.Replace("/t_thumb/", "/t_cover_big/"),
                     Summary = g.Summary,
-                    ReleaseDate = g.FirstReleaseDate!.Value
+                    ReleaseDate = g.FirstReleaseDate!.Value,
+                    Url = g.Url
                 }).ToList();
             }
             catch
@@ -83,7 +84,7 @@ namespace CAPSTONE_BE.Services
         public async Task<List<GameDetailDto>> GetNewReleasesAsync()
         {
             var thirtyDaysAgo = DateTimeOffset.UtcNow.AddDays(-30).ToUnixTimeSeconds();
-            var query = $@"fields id,name,cover.url,summary,first_release_date; where first_release_date >= {thirtyDaysAgo} & cover != null; sort first_release_date desc; limit 15;
+            var query = $@"fields id,name,cover.url,summary,first_release_date, url; where first_release_date >= {thirtyDaysAgo} & cover != null; sort first_release_date desc; limit 15;
     ";
 
             var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query);
@@ -97,13 +98,14 @@ namespace CAPSTONE_BE.Services
                 Name = g.Name,
                 Cover = g.Cover?.Value?.Url.Replace("/t_thumb/", "/t_cover_big/"),
                 Summary = g.Summary,
-                ReleaseDate = g.FirstReleaseDate ?? DateTimeOffset.MinValue
+                ReleaseDate = g.FirstReleaseDate ?? DateTimeOffset.MinValue,
+                Url = g.Url
             }).ToList();
         }
 
         public async Task<List<GameDetailDto>> GetMostPlayedAsync()
         {
-            var query = $@"fields id,name,cover.url,summary,first_release_date; where cover != null; sort popularity desc; limit 15;";
+            var query = $@"fields id,name,cover.url,summary,first_release_date, url; where cover != null; sort popularity desc; limit 15;";
 
             var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query);
             if (games == null)
@@ -116,7 +118,8 @@ namespace CAPSTONE_BE.Services
                 Name = g.Name,
                 Cover = g.Cover?.Value?.Url.Replace("/t_thumb/", "/t_cover_big/"),
                 Summary = g.Summary,
-                ReleaseDate = g.FirstReleaseDate ?? DateTimeOffset.MinValue
+                ReleaseDate = g.FirstReleaseDate ?? DateTimeOffset.MinValue,
+                Url = g.Url
             }).ToList();
         }
     }

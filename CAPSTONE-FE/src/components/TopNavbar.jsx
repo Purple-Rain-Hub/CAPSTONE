@@ -1,9 +1,6 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/action";
+import { Container, Nav, Navbar, Button } from "react-bootstrap";
 
 const TopNavbar = () => {
   const dispatch = useDispatch();
@@ -17,26 +14,38 @@ const TopNavbar = () => {
   };
 
   return (
-    <Navbar data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="navbar-neon py-3" sticky="top">
       <Container>
-        <Navbar.Brand href="/">
-          <img src="public\logoController.png" alt="logo" width={"45px"} />
+        <Navbar.Brand href="/" className="d-flex align-items-center">
+          <img
+            src="/logoController.png"
+            alt="logo"
+            width={40}
+            className="me-2"
+          />
+          <span className="brand-text">What2Game</span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+
+        <Navbar.Toggle aria-controls="main-nav" className="border-0" />
+
+        <Navbar.Collapse id="main-nav">
+          <Nav className="mx-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/Survey">Nuovo Quiz</Nav.Link>
+            <Nav.Link href="/Survey">Quiz</Nav.Link>
             <Nav.Link href="/CreateSurvey">Crea Quiz</Nav.Link>
           </Nav>
-          <Nav>
-            {!token && <Nav.Link href="/login">Login</Nav.Link>}
-            {token && (
-              <button className="btn" onClick={handleLogout}>
-                Logout
-              </button>
+          <Nav className="align-items-center">
+            {!token && (
+              <>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/register">Registrati</Nav.Link>
+              </>
             )}
-            {!token && <Nav.Link href="/register">Registrati</Nav.Link>}
+            {token && (
+              <Button variant="outline-light" size="sm" onClick={handleLogout}>
+                Logout
+              </Button>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
