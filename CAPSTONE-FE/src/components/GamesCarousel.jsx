@@ -1,45 +1,35 @@
 import { Carousel, Card, Row, Col, Container } from "react-bootstrap";
 
-const GamesCarousel = ({ title, games, itemsToShow }) => {
+const GamesCarousel = ({ games, itemsToShow }) => {
+  const gap = 16;
   const pages = [];
   for (let i = 0; i < games.length; i += itemsToShow) {
     pages.push(games.slice(i, i + itemsToShow));
   }
 
   return (
-    <Container
-      fluid
-      className="my-4 py-4 rounded-4 border border-3 border-black"
-      id="carouselDiv"
-    >
-      <h3 className="mb-3">{title}</h3>
-      <Carousel controls indicators={false}>
+    <Container fluid className="p-0">
+      <Carousel controls indicators={false} variant="dark">
         {pages.map((page, idx) => (
           <Carousel.Item key={idx}>
             <div
-              className="d-flex justify-content-start ps-3"
-              style={{ gap: "1rem" }}
+              className="d-flex justify-content-center px-3"
+              style={{ gap: `${gap}px` }}
             >
               {page.map((g) => (
                 <div
                   key={g.id}
+                  className="carousel-card-no-title"
                   style={{
-                    flex: `0 0 calc(100% / ${itemsToShow} - 1rem)`,
-                    height: 240,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    overflow: "hidden",
+                    flex: `0 0 calc((100% - ${(page.length - 1) * gap}px) / ${
+                      page.length
+                    })`,
                   }}
                 >
                   <img
                     src={g.cover}
                     alt={g.name}
-                    style={{
-                      maxHeight: "100%",
-                      maxWidth: "100%",
-                      objectFit: "contain",
-                    }}
+                    className="carousel-img-no-title"
                   />
                 </div>
               ))}

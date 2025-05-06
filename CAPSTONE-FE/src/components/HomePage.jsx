@@ -4,6 +4,7 @@ import GamesCarousel from "./GamesCarousel";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchMostPlayed, fetchNewReleases } from "../redux/action";
+import Hero from "./Hero";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -37,84 +38,44 @@ const HomePage = () => {
     return (
       <Container
         fluid
-        className="text-center mainContainer d-flex align-items-center justify-content-center"
+        className="mainContainer d-flex vh-100 align-items-center justify-content-center"
       >
-        <div>
-          <Spinner animation="border" />
-          <p>Caricamento dei contenuti..</p>
-        </div>
+        <Spinner animation="grow" variant="light" />
       </Container>
     );
   }
 
   return (
-    <Container
-      fluid
-      className="p-1 p-lg-4 d-flex flex-column mainContainer"
-      id="home"
-    >
-      <Container
-        id="hero"
-        className="d-flex justify-content-between p-0 animated-purple rounded-4"
-      >
-        <img
-          src="\mascot\what2gameMascotHalf.png"
-          alt="mascotHero"
-          className="mx-auto w-25"
-        />
-        <Container className="text-center my-auto w-50">
-          <h2>Vieni e fai il nostro quiz</h2>
-          <Button
-            onClick={() => {
-              navigate("/Survey");
-            }}
-          >
-            Survey
-          </Button>
-        </Container>
+    <Container fluid className="mainContainer">
+      {/* HERO */}
+      <Hero />
+
+      {/* CAROSELLO NUOVE USCITE */}
+      <Container className="mb-5">
+        <h3 className="mb-3">Nuove Uscite</h3>
+        <GamesCarousel title="" games={newReleases} itemsToShow={5} />
       </Container>
-      <Container id="newReleases">
-        <GamesCarousel
-          title={"Nuove Uscite"}
-          itemsToShow={5}
-          games={newReleases}
-        />
-        {error && (
-          <span className="bg-danger p-2 my-4">
-            Errore nel caricamento dei contenuti
-          </span>
-        )}
+
+      {/* CAROSELLO PIÙ GIOCATI */}
+      <Container className="mb-5">
+        <h3 className="mb-3">I Più Giocati</h3>
+        <GamesCarousel title="" games={mostPlayed} itemsToShow={5} />
       </Container>
-      <Container id="mostPlayed">
-        <GamesCarousel
-          title={"I più Giocati"}
-          itemsToShow={5}
-          games={mostPlayed}
-        />
-        {error && (
-          <span className="bg-danger p-2 my-4">
-            Errore nel caricamento dei contenuti
-          </span>
-        )}
-      </Container>
-      <Container id="info">
-        <Container
-          fluid
-          className="my-4 border border-4 py-4 bg-warning border-danger"
-        >
-          <Row>
-            <Col className="text-center">
-              <h5>"citazione bella ciao a tutti e tutte scrivere scrivere"</h5>
-            </Col>
-            <Col>
-              <h5>obbiettivo bello ciato a tutti</h5>
-              <h6>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Fugiat, nostrum sequi?
-              </h6>
-            </Col>
-          </Row>
-        </Container>
+
+      {/* INFO BOX */}
+      <Container fluid className="card-purple p-4 mb-5">
+        <Row>
+          <Col className="text-center">
+            <h5>"Play with passion, win with style!"</h5>
+          </Col>
+          <Col>
+            <h5>La nostra missione</h5>
+            <p>
+              Aiutarti a trovare il gioco perfetto basato sui tuoi gusti, grazie
+              a un quiz rapido e divertente.
+            </p>
+          </Col>
+        </Row>
       </Container>
     </Container>
   );

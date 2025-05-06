@@ -1,67 +1,100 @@
-#surveyContainer,
-#home {
-  background: #b03dd3;
-  background: linear-gradient(
-    90deg,
-    rgba(176, 61, 211, 1) 10%,
-    rgb(20, 20, 20) 30%
-  );
+/* --------------- GLOBAL RESET & THEME --------------- */
+:root {
+  --violet-start: #b03dd3;
+  --violet-end: #6e32a8;
+  --neon-cyan: #33fff3;
+  --neon-pink: #ff33d6;
+  --card-bg: rgba(0, 0, 0, 0.6);
+  --button-glow: rgba(255, 51, 246, 0.6);
+  --text-color: #eee;
 }
 
-/* .secondaryContainer {
-  background: #55d818;
-  background: linear-gradient(
-    90deg,
-    rgba(85, 216, 24, 1) 40%,
-    rgba(0, 0, 0, 1) 100%
-  );
-} */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Press Start 2P", sans-serif;
+  background: linear-gradient(120deg, var(--violet-start), var(--violet-end));
+  color: var(--text-color);
+  overflow-x: hidden;
+}
 
-/* #home {
-  background: #6c1b85;
-  background: linear-gradient(
-    90deg,
-    rgba(108, 27, 133, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
-} */
-
+/* Override Bootstrap container */
 .mainContainer {
-  min-height: 85vh;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
-.animated-purple {
-  background: linear-gradient(
-    to right,
-    rgb(176, 61, 211),
-    rgb(0, 0, 0),
-    rgb(176, 61, 211),
-    rgb(0, 0, 0)
-  );
-  background-size: 300% 100%;
-  animation: moveGradient 8s linear infinite;
+/* Link e bottoni generali */
+a,
+button {
+  font-family: "Permanent Marker", cursive;
+  transition: all 0.2s ease-in-out;
 }
 
-.animated-green {
-  background: linear-gradient(
-    to right,
-    rgb(85, 216, 24),
-    rgb(0, 0, 0),
-    rgb(85, 216, 24),
-    rgb(0, 0, 0)
-  );
-  background-size: 300% 100%;
-  animation: moveGradient 8s linear infinite;
+/* Neon button */
+.btn-survey {
+  background: none;
+  border: 2px solid var(--neon-pink);
+  color: var(--neon-pink);
+  position: relative;
+  z-index: 1;
+}
+.btn-survey::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: var(--neon-pink);
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: -1;
+}
+.btn-survey:hover::after {
+  opacity: 1;
+}
+.btn-survey:hover {
+  color: #000;
+  background: var(--neon-pink);
 }
 
-@keyframes moveGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* Card generiche */
+.card-purple {
+  background: var(--card-bg);
+  border: 1px solid var(--neon-cyan);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Titoli */
+h2,
+h3,
+h5 {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Contenitore card con aspect-ratio fisso 3:4 */
+.carousel-card-no-title {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4; /* rapporto altezza/larghezza */
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(51, 255, 243, 0.7);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s;
+}
+.carousel-card-no-title:hover {
+  transform: translateY(-5px);
+}
+
+/* L’immagine riempie tutto e si taglia proporzionalmente */
+.carousel-img-no-title {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
