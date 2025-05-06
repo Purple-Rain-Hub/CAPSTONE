@@ -81,7 +81,7 @@ const SurveyPage = () => {
       <Container fluid id="surveyContainer" className="mainContainer">
         <Container className="d-flex justify-content-between p-0">
           <img
-            src="public\mascot\what2gameMascotFull.png"
+            src="\mascot\what2gameMascotFull.png"
             alt="mascotHero"
             className="mx-auto"
           />

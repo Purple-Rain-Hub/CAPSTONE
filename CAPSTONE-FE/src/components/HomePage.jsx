@@ -35,9 +35,14 @@ const HomePage = () => {
 
   if (loading) {
     return (
-      <Container fluid className="text-center mainContent">
-        <Spinner animation="border" />
-        <p>Caricamento dei contenuti..</p>
+      <Container
+        fluid
+        className="text-center mainContainer d-flex align-items-center justify-content-center"
+      >
+        <div>
+          <Spinner animation="border" />
+          <p>Caricamento dei contenuti..</p>
+        </div>
       </Container>
     );
   }
@@ -45,17 +50,17 @@ const HomePage = () => {
   return (
     <Container
       fluid
-      className="p-1 p-lg-4 d-flex flex-column mainContainer bg-black"
+      className="p-1 p-lg-4 d-flex flex-column mainContainer"
       id="home"
     >
       <Container
         id="hero"
-        className="d-flex justify-content-between p-0 border border-4 border-black"
+        className="d-flex justify-content-between p-0 animated-purple rounded-4"
       >
         <img
-          src="public\mascot\what2gameMascotHalf.png"
+          src="\mascot\what2gameMascotHalf.png"
           alt="mascotHero"
-          className="mx-auto"
+          className="mx-auto w-25"
         />
         <Container className="text-center my-auto w-50">
           <h2>Vieni e fai il nostro quiz</h2>

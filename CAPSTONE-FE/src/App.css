@@ -1,21 +1,21 @@
-#hero,
-#surveyContainer {
+#surveyContainer,
+#home {
   background: #b03dd3;
   background: linear-gradient(
     90deg,
-    rgba(176, 61, 211, 1) 40%,
-    rgba(0, 0, 0, 1) 100%
+    rgba(176, 61, 211, 1) 10%,
+    rgb(20, 20, 20) 30%
   );
 }
 
-#carouselDiv {
+/* .secondaryContainer {
   background: #55d818;
   background: linear-gradient(
     90deg,
     rgba(85, 216, 24, 1) 40%,
     rgba(0, 0, 0, 1) 100%
   );
-}
+} */
 
 /* #home {
   background: #6c1b85;
@@ -28,4 +28,40 @@
 
 .mainContainer {
   min-height: 85vh;
+}
+
+.animated-purple {
+  background: linear-gradient(
+    to right,
+    rgb(176, 61, 211),
+    rgb(0, 0, 0),
+    rgb(176, 61, 211),
+    rgb(0, 0, 0)
+  );
+  background-size: 300% 100%;
+  animation: moveGradient 8s linear infinite;
+}
+
+.animated-green {
+  background: linear-gradient(
+    to right,
+    rgb(85, 216, 24),
+    rgb(0, 0, 0),
+    rgb(85, 216, 24),
+    rgb(0, 0, 0)
+  );
+  background-size: 300% 100%;
+  animation: moveGradient 8s linear infinite;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
