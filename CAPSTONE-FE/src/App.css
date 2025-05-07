@@ -441,3 +441,13 @@ img[alt="Mascotte triste"] {
   color: #10001d;
   background: var(--neon-cyan);
 }
+
+/* Register Page */
+#registerContainer {
+  background: rgba(16, 0, 29, 0.4);
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}

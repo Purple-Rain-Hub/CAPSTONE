@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../redux/action";
-import { Button, Container, Form } from "react-bootstrap";
+import { Alert, Button, Container, Form, FloatingLabel } from "react-bootstrap";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -28,60 +28,101 @@ const RegisterPage = () => {
   };
 
   return (
-    <Container className="mt-5" style={{ maxWidth: 500 }}>
-      <h2>Registrati</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            name="email"
-            type="email"
-            required
-            value={registerInfo.email}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Nome</Form.Label>
-          <Form.Control
-            name="firstName"
-            required
-            value={registerInfo.firstName}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Cognome</Form.Label>
-          <Form.Control
-            name="lastName"
-            required
-            value={registerInfo.lastName}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Data di nascita</Form.Label>
-          <Form.Control
-            name="birthDate"
-            type="date"
-            required
-            value={registerInfo.birthDate}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            name="password"
-            type="password"
-            required
-            value={registerInfo.password}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Button type="submit">Registrati</Button>
-      </Form>
+    <Container id="registerContainer">
+      <div className="card-login position-relative">
+        <h2>Registrati</h2>
+        {error && <Alert variant="danger">{error}</Alert>}
+
+        <Form onSubmit={handleSubmit}>
+          <FloatingLabel
+            controlId="floatingEmail"
+            label="Email"
+            className="mb-3"
+          >
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="name@example.com"
+              required
+              value={registerInfo.email}
+              onChange={handleChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingFirstName"
+            label="Nome"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="firstName"
+              placeholder="Mario"
+              required
+              value={registerInfo.firstName}
+              onChange={handleChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingLastName"
+            label="Cognome"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="lastName"
+              placeholder="Rossi"
+              required
+              value={registerInfo.lastName}
+              onChange={handleChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingBirthDate"
+            label="Data di nascita"
+            className="mb-3"
+          >
+            <Form.Control
+              type="date"
+              name="birthDate"
+              placeholder="1990-01-01"
+              required
+              value={registerInfo.birthDate}
+              onChange={handleChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingPassword"
+            label="Password"
+            className="mb-4"
+          >
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              value={registerInfo.password}
+              onChange={handleChange}
+            />
+          </FloatingLabel>
+
+          <div className="d-grid gap-2">
+            <Button type="submit" className="btn-login position-relative">
+              Registrati
+            </Button>
+            <Button
+              variant="outline-light"
+              className="btn-register"
+              onClick={() => navigate("/login")}
+            >
+              Ho già un account
+            </Button>
+          </div>
+        </Form>
+      </div>
     </Container>
   );
 };
