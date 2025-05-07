@@ -10,14 +10,19 @@ import ResultsPage from "./components/survey/ResultsPage";
 import TopNavbar from "./components/TopNavbar";
 import FooterComponent from "./components/FooterComponent";
 import "./App.css";
+import ErrorPage from "./components/ErrorPage";
+import NotAuthRoute from "./components/NotAuthRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <TopNavbar />
       <Routes>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route element={<NotAuthRoute />}>
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+
         <Route path="/" element={<HomePage />} />
 
         <Route element={<PrivateRoute />}>
@@ -26,7 +31,7 @@ function App() {
           <Route path="/SurveyResults" element={<ResultsPage />} />
         </Route>
 
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
       <FooterComponent />
     </BrowserRouter>

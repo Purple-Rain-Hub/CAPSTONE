@@ -137,7 +137,7 @@ h5 {
 
 /* Titolo domanda neon */
 .card-survey h2 {
-  text-shadow: 0 0 4px var(--neon-cyan), 0 0 8px var(--neon-pink);
+  text-shadow: 0 0 2px var(--neon-cyan), 0 0 3px var(--neon-pink);
   font-size: 1.5rem;
 }
 
@@ -192,7 +192,7 @@ h5 {
 
 /* Titolo principale */
 #resultsContainer h2 {
-  text-shadow: 0 0 4px var(--neon-cyan), 0 0 8px var(--neon-pink);
+  text-shadow: 0 0 2px var(--neon-cyan), 0 0 3px var(--neon-pink);
   margin-bottom: 2rem;
   font-size: 2rem;
 }
@@ -310,7 +310,7 @@ h5 {
   font-family: "Permanent Marker", cursive;
   color: var(--neon-pink);
   font-size: 1.25rem;
-  text-shadow: 0 0 4px var(--neon-pink), 0 0 8px var(--neon-pink);
+  text-shadow: 0 0 1px var(--neon-pink), 0 0 3px var(--neon-pink);
 }
 
 /* Toggle “hamburger” neon */
@@ -332,4 +332,112 @@ h5 {
   .navbar-neon .brand-text {
     font-size: 1rem;
   }
+}
+
+/* Mascot error page */
+img[alt="Mascotte triste"] {
+  filter: grayscale(100%);
+}
+
+/* Login Page */
+#loginContainer {
+  background: rgba(16, 0, 29, 0.4);
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.card-login {
+  background: var(--card-bg);
+  border: 1px solid var(--neon-cyan);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(51, 255, 243, 0.2), 0 0 30px rgba(255, 51, 214, 0.3);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.card-login h2 {
+  color: var(--neon-pink);
+  text-shadow: 0 0 2px var(--neon-pink), 0 0 3px var(--neon-pink);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.card-login .form-label {
+  color: var(--text-color);
+}
+
+.btn-login {
+  width: 100%;
+  background: none;
+  border: 2px solid var(--neon-pink);
+  color: var(--neon-pink);
+  font-family: "Permanent Marker", cursive;
+  padding: 0.75rem;
+  transition: all 0.2s;
+}
+.btn-login::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: var(--neon-pink);
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: -1;
+}
+.btn-login:hover::after {
+  opacity: 1;
+}
+.btn-login:hover {
+  color: #10001d;
+  background: var(--neon-pink);
+}
+
+@media (max-width: 576px) {
+  .card-login {
+    padding: 1.5rem;
+  }
+  .card-login h2 {
+    font-size: 1.5rem;
+  }
+  .btn-login {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
+.btn-register {
+  font-family: "Permanent Marker", cursive;
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.btn-register::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: var(--neon-cyan);
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: -1;
+}
+.btn-register:hover::after {
+  opacity: 1;
+}
+.btn-register:hover {
+  color: #10001d;
+  background: var(--neon-cyan);
 }
