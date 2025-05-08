@@ -156,7 +156,7 @@ const CreateSurveyPage = () => {
             </div>
           ))}
 
-          <div className="d-flex justify-content-between mt-4">
+          <div className="d-flex justify-content-between mt-4 flex-wrap">
             <Button
               variant="outline-light"
               onClick={() =>

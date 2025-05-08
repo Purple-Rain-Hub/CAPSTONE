@@ -63,7 +63,7 @@ const ResultsPage = () => {
     <Container id="resultsContainer">
       <h2 className="text-center">I tuoi Top 5</h2>
 
-      <Card className="card-featured">
+      <Card className="card-featured d-lg-flex flex-lg-row">
         {first.cover && <Card.Img src={first.cover} alt={first.name} />}
         <Card.Body className="card-body">
           <Card.Title as="h3" className="text-white">
