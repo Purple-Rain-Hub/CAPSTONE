@@ -82,12 +82,15 @@ const HomePage = () => {
 
       {/* INFO BOX */}
       <Container fluid className="card-purple p-4 mb-5">
-        <Row>
+        <Row className=" align-items-center">
           <Col className="text-center">
-            <h5>"Play with passion, win with style!"</h5>
+            <h5>
+              "But then there was fire. <br />
+              And with fire, came disparity"
+            </h5>
           </Col>
           <Col>
-            <hr className="d-md-none" />
+            <hr className="d-sm-none" />
             <h5 className=" mt-4">La nostra missione</h5>
             <p>
               Aiutarti a trovare il gioco perfetto basato sui tuoi gusti, grazie
