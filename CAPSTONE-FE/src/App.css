@@ -13,7 +13,10 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Press Start 2P", sans-serif;
-  background: linear-gradient(120deg, var(--violet-start), var(--violet-end));
+  /* background: linear-gradient(120deg, var(--violet-start), var(--violet-end)); */
+  background-image: url("/public/sfondo\ what2game.jpg");
+  background-position: center;
+  background-size: cover;
   color: var(--text-color);
   overflow-x: hidden;
 }
@@ -64,7 +67,6 @@ button {
 /* Card generiche */
 .card-purple {
   background: var(--card-bg);
-  border: 1px solid var(--neon-cyan);
   border-radius: 1rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
@@ -450,4 +452,62 @@ img[alt="Mascotte triste"] {
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
+}
+
+/* CreateSurvey Page */
+#createContainer {
+  background: rgba(16, 0, 29, 0.4);
+  min-height: 85vh;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.card-create {
+  background: var(--card-bg);
+  border: 1px solid var(--neon-cyan);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(51, 255, 243, 0.2), 0 0 30px rgba(255, 51, 214, 0.4);
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.card-create h1 {
+  color: var(--neon-pink);
+  text-shadow: 0 0 2px var(--neon-pink), 0 0 3px var(--neon-pink);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.card-create .alert {
+  margin-bottom: 1rem;
+}
+
+.question-block {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.question-block h5 {
+  color: var(--neon-cyan);
+  margin-bottom: 0.75rem;
+}
+
+.btn-add,
+.btn-remove {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .card-create {
+    padding: 1rem;
+  }
+  .question-block {
+    padding: 0.75rem;
+  }
 }

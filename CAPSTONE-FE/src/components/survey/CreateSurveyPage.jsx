@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getSurvey, postNewSurvey } from "../../redux/action";
 import { Navigate } from "react-router-dom";
@@ -11,182 +11,176 @@ const CreateSurveyPage = () => {
     {
       question: "",
       answers: [
-        {
-          answer: "",
-          answerId: null,
-        },
-        {
-          answer: "",
-          answerId: null,
-        },
+        { answer: "", answerId: null },
+        { answer: "", answerId: null },
       ],
       points: 1,
     },
   ]);
-  const [isSaved, setIsSaved] = useState(null);
+  const [status, setStatus] = useState(null); // null | "success" | "error"
+
+  useEffect(() => {
+    (async () => {
+      const existing = await dispatch(getSurvey());
+      if (existing && existing.length) setNewSurvey(existing);
+    })();
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (status) {
+      const timer = setTimeout(() => setStatus(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
+
+  if (role !== "Admin") return <Navigate to="/error" />;
 
   const handleNewSurvey = async (e) => {
     e.preventDefault();
-    const success = await dispatch(postNewSurvey(newSurvey));
-    if (success) {
-      setIsSaved(true);
-    } else setIsSaved(false);
+    const ok = await dispatch(postNewSurvey(newSurvey));
+    setStatus(ok ? "success" : "error");
   };
 
-  const fetchSurvey = async () => {
-    const existingSurvey = await dispatch(getSurvey());
-    if (existingSurvey != null && existingSurvey.length > 0) {
-      setNewSurvey(existingSurvey);
-    }
+  const updateQuestion = (idx, field, value) => {
+    const copy = [...newSurvey];
+    copy[idx][field] = value;
+    setNewSurvey(copy);
   };
 
-  useEffect(() => {
-    fetchSurvey();
-  }, []);
-
-  useEffect(() => {
-    if (isSaved !== null) {
-      const id = setTimeout(() => setIsSaved(null), 6000);
-      return () => clearTimeout(id);
-    }
-  }, [isSaved]);
-
-  if (role != "Admin") {
-    return <Navigate to="/error" />;
-  }
+  const updateAnswer = (qIdx, aIdx, value) => {
+    const copy = [...newSurvey];
+    copy[qIdx].answers[aIdx].answer = value;
+    setNewSurvey(copy);
+  };
 
   return (
-    <Container>
-      <h1>Crea nuovo questionario</h1>
-      {isSaved === null ? (
-        <span className="d-none"></span>
-      ) : isSaved ? (
-        <span className="bg-primary text-white p-2">Questionario salvato</span>
-      ) : (
-        <span className="bg-danger p-2">
-          Errore nel salvataggio del questionario
-        </span>
-      )}
+    <Container id="createContainer">
+      <div className="card-create">
+        <h1>Crea nuovo questionario</h1>
 
-      <Form onSubmit={handleNewSurvey}>
-        {newSurvey.map((q, x) => (
-          <div key={x} className="border border-1 border-dark-subtle p-3 mt-2">
-            <div>
-              <Form.Label className="mt-2 fw-lighter">
-                Domanda n.{x + 1}
-              </Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={q.question}
-                onChange={(e) => {
-                  const updatedSurvey = [...newSurvey];
-                  updatedSurvey[x].question = e.target.value;
-                  setNewSurvey(updatedSurvey);
-                }}
-              />
-            </div>
-            <div>
-              <Form.Label className="mt-2 fw-lighter">Risposte</Form.Label>
-              {newSurvey[x].answers.map((a, n) => (
+        {status === "success" && (
+          <Alert variant="success">Questionario salvato!</Alert>
+        )}
+        {status === "error" && (
+          <Alert variant="danger">
+            Errore nel salvataggio del questionario.
+          </Alert>
+        )}
+
+        <Form onSubmit={handleNewSurvey}>
+          {newSurvey.map((q, idx) => (
+            <div key={idx} className="question-block">
+              <h5>Domanda {idx + 1}</h5>
+              <Form.Group className="mb-3">
                 <Form.Control
-                  key={n}
-                  className="mt-2"
                   type="text"
+                  placeholder="Testo della domanda"
                   required
-                  placeholder={`risposta n.${n + 1}`}
-                  value={a.answer}
-                  onChange={(e) => {
-                    const updatedSurvey = [...newSurvey];
-                    updatedSurvey[x].answers[n].answer = e.target.value;
-                    setNewSurvey(updatedSurvey);
-                  }}
+                  value={q.question}
+                  onChange={(e) =>
+                    updateQuestion(idx, "question", e.target.value)
+                  }
                 />
-              ))}
-              <Button
-                type="button"
-                onClick={() => {
-                  const updatedSurvey = [...newSurvey];
-                  updatedSurvey[x].answers.push({ answer: "", answerId: null });
-                  setNewSurvey(updatedSurvey);
-                }}
-              >
-                Aggiungi risposta
-              </Button>
-              {newSurvey[x].answers.length > 2 ? (
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                {q.answers.map((ans, aIdx) => (
+                  <Form.Control
+                    key={aIdx}
+                    className="mb-2"
+                    type="text"
+                    placeholder={`Risposta ${aIdx + 1}`}
+                    required
+                    value={ans.answer}
+                    onChange={(e) => updateAnswer(idx, aIdx, e.target.value)}
+                  />
+                ))}
+                <div className="d-flex gap-2">
+                  <Button
+                    variant="outline-light"
+                    size="sm"
+                    className="btn-add"
+                    onClick={() => {
+                      const copy = [...newSurvey];
+                      copy[idx].answers.push({ answer: "", answerId: null });
+                      setNewSurvey(copy);
+                    }}
+                  >
+                    + Risposta
+                  </Button>
+                  {q.answers.length > 2 && (
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      className="btn-remove"
+                      onClick={() => {
+                        const copy = [...newSurvey];
+                        copy[idx].answers.pop();
+                        setNewSurvey(copy);
+                      }}
+                    >
+                      – Rimuovi risposta
+                    </Button>
+                  )}
+                </div>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Punti per questa domanda</Form.Label>
+                <Form.Control
+                  type="number"
+                  min={0}
+                  required
+                  value={q.points}
+                  onChange={(e) =>
+                    updateQuestion(idx, "points", parseInt(e.target.value, 10))
+                  }
+                />
+              </Form.Group>
+
+              {newSurvey.length > 1 && (
                 <Button
-                  type="button"
-                  onClick={() => {
-                    const updatedSurvey = [...newSurvey];
-                    updatedSurvey[x].answers.pop();
-                    setNewSurvey(updatedSurvey);
-                  }}
-                  className="btn-danger"
+                  variant="outline-danger"
+                  size="sm"
+                  onClick={() =>
+                    setNewSurvey((prev) => {
+                      const copy = [...prev];
+                      copy.splice(idx, 1);
+                      return copy;
+                    })
+                  }
                 >
-                  Rimuovi risposta
+                  Rimuovi domanda
                 </Button>
-              ) : (
-                <p className="d-none"></p>
               )}
             </div>
-            <div>
-              <Form.Label className="mt-2 fw-lighter">Punti</Form.Label>
-              <Form.Control
-                type="number"
-                required
-                value={q.points}
-                onChange={(e) => {
-                  const updatedSurvey = [...newSurvey];
-                  updatedSurvey[x].points = parseInt(e.target.value, 10) || 0;
-                  setNewSurvey(updatedSurvey);
-                }}
-              />
-            </div>
-            {newSurvey.length > 1 ? (
-              <Button
-                type="button"
-                onClick={() => {
-                  const updatedSurvey = [...newSurvey];
-                  updatedSurvey.splice(x, 1);
-                  setNewSurvey(updatedSurvey);
-                }}
-                className="btn-danger"
-              >
-                Rimuovi domanda
-              </Button>
-            ) : (
-              <p className="d-none"></p>
-            )}
+          ))}
+
+          <div className="d-flex justify-content-between mt-4">
+            <Button
+              variant="outline-light"
+              onClick={() =>
+                setNewSurvey((prev) => [
+                  ...prev,
+                  {
+                    question: "",
+                    answers: [
+                      { answer: "", answerId: null },
+                      { answer: "", answerId: null },
+                    ],
+                    points: 1,
+                  },
+                ])
+              }
+            >
+              + Aggiungi domanda
+            </Button>
+            <Button type="submit" variant="danger">
+              Salva questionario
+            </Button>
           </div>
-        ))}
-        <Button
-          type="button"
-          className="mt-2 d-block"
-          onClick={() => {
-            const updatedSurvey = [...newSurvey];
-            updatedSurvey.push({
-              question: "",
-              answers: [
-                {
-                  answer: "",
-                  answerId: null,
-                },
-                {
-                  answer: "",
-                  answerId: null,
-                },
-              ],
-              points: 1,
-            });
-            setNewSurvey(updatedSurvey);
-          }}
-        >
-          Aggiungi domanda
-        </Button>
-        <Button type="submit" className="mt-4 d-block btn-danger">
-          Salva Form
-        </Button>
-      </Form>
+        </Form>
+      </div>
     </Container>
   );
 };
