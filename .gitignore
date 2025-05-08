@@ -362,6 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-/CAPSTONE-BE/CAPSTONE-BE/appsettings.json
-/CAPSTONE-BE/CAPSTONE-BE/appsettings.Development.json
 /CAPSTONE-BE/CAPSTONE-BE/Migrations

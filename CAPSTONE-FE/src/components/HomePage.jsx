@@ -87,7 +87,8 @@ const HomePage = () => {
             <h5>"Play with passion, win with style!"</h5>
           </Col>
           <Col>
-            <h5>La nostra missione</h5>
+            <hr className="d-md-none" />
+            <h5 className=" mt-4">La nostra missione</h5>
             <p>
               Aiutarti a trovare il gioco perfetto basato sui tuoi gusti, grazie
               a un quiz rapido e divertente.
