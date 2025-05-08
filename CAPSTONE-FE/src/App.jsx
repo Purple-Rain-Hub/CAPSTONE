@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/homepage/HomePage";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SurveyPage from "./components/survey/SurveyPage";
 import CreateSurveyPage from "./components/survey/CreateSurveyPage";

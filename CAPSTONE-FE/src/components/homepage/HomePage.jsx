@@ -2,7 +2,7 @@ import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import GamesCarousel from "./GamesCarousel";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchMostPlayed, fetchNewReleases } from "../redux/action";
+import { fetchMostPlayed, fetchNewReleases } from "../../redux/action";
 import Hero from "./Hero";
 
 const HomePage = () => {
