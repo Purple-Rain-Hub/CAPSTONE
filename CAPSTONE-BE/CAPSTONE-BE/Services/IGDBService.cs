@@ -84,9 +84,9 @@ namespace CAPSTONE_BE.Services
         public async Task<List<GameDetailDto>> GetNewReleasesAsync()
         {
             var thirtyDaysAgo = DateTimeOffset.UtcNow.AddDays(-30).ToUnixTimeSeconds();
-            var query = $@"fields id,name,cover.url,summary,first_release_date, url; where first_release_date >= {thirtyDaysAgo} & cover != null & version_parent = null & themes != (10); sort first_release_date desc; limit 15;
-    ";
+            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
+            var query = $@"fields id, name, cover.url, summary, first_release_date, url;where first_release_date >= {thirtyDaysAgo}& first_release_date <= {now}& cover != null& version_parent = null& themes != (10);sort first_release_date desc;limit 15;";
             var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query);
             if (games == null)
             {
