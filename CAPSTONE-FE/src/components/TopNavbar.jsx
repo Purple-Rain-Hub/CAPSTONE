@@ -1,16 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/action";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const TopNavbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const token =
     useSelector((state) => state.auth.token) ||
     localStorage.getItem("jwtToken");
+  const role = useSelector((state) => state.auth.role);
 
   const handleLogout = async (e) => {
     e.preventDefault();
     await dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -32,7 +37,9 @@ const TopNavbar = () => {
           <Nav className="mx-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/Survey">Quiz</Nav.Link>
-            <Nav.Link href="/CreateSurvey">Crea Quiz</Nav.Link>
+            {role === "Admin" && (
+              <Nav.Link href="/CreateSurvey">Crea Quiz</Nav.Link>
+            )}
           </Nav>
           <Nav className="align-items-center">
             {!token && (

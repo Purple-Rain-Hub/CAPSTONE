@@ -1,10 +1,26 @@
+import { jwtDecode } from "jwt-decode"
+
+const rawToken = localStorage.getItem("jwtToken");
+
+let initialRole = null;
+if (rawToken) {
+    try {
+        const decoded = jwtDecode(rawToken);
+        initialRole = decoded[
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+        ];
+    } catch {
+        initialRole = null;
+    }
+}
+
 const initialState = {
-    //creo esempio di slice con nome generico
     survey: {
         content: []
     },
     auth: {
-        token: localStorage.getItem("jwtToken"),
+        token: rawToken,
+        role: initialRole,
         error: null,
     }
 }
@@ -33,7 +49,8 @@ const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 auth: {
-                    token: action.payload,
+                    token: action.payload.token,
+                    role: action.payload.role,
                     error: null
                 }
             }

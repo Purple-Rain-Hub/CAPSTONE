@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getSurvey, postNewSurvey } from "../../redux/action";
+import { Navigate } from "react-router-dom";
 
 const CreateSurveyPage = () => {
+  const role = useSelector((state) => state.auth.role);
   const dispatch = useDispatch();
   const [newSurvey, setNewSurvey] = useState([
     {
@@ -48,6 +50,10 @@ const CreateSurveyPage = () => {
       return () => clearTimeout(id);
     }
   }, [isSaved]);
+
+  if (role != "Admin") {
+    return <Navigate to="/error" />;
+  }
 
   return (
     <Container>

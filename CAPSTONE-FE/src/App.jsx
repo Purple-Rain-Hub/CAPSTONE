@@ -25,9 +25,10 @@ function App() {
 
         <Route path="/" element={<HomePage />} />
 
+        <Route path="/CreateSurvey" element={<CreateSurveyPage />} />
+
         <Route element={<PrivateRoute />}>
           <Route path="/Survey" element={<SurveyPage />} />
-          <Route path="/CreateSurvey" element={<CreateSurveyPage />} />
           <Route path="/SurveyResults" element={<ResultsPage />} />
         </Route>
 

@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode"
+
 //creazione nuovo questionario
 export const postNewSurvey = (newSurvey) => {
     return async (dispatch, getState) => {
@@ -159,8 +161,17 @@ export const login = (loginInfo) => {
             })
             if (response.ok) {
                 const { token } = await response.json();
+                let role = null;
+                try {
+                    const decoded = jwtDecode(token);
+                    role = decoded[
+                        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                    ];
+                } catch (error) {
+                    console.error("Impossibile decodificare il ruolo dal token: " + error);
+                }
                 localStorage.setItem("jwtToken", token);
-                dispatch({ type: "LOGIN_SUCCESS", payload: token });
+                dispatch({ type: "LOGIN_SUCCESS", payload: { token, role } });
                 return true;
             }
             else {
